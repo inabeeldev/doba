@@ -1,0 +1,44 @@
+/* .sub-categories{
+    display: none;
+} */
+
+.main-category a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.sub-categories {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: none;
+    background-color: #fff;
+    border-left: 2px solid #e0e0e0;
+    padding: 10px;
+}
+
+.main-category:hover .sub-categories {
+    display: block;
+}
+
+.sub-sub-categories {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    display: none;
+    background-color: #fff;
+    border-left: 2px solid #e0e0e0;
+    padding: 10px;
+}
+
+.sub-categories:hover .sub-sub-categories {
+    display: block;
+}
+
+ .product-image {
+   height: 325px !important; /* Set a fixed height for the images */
+    width: 100%; /* Ensure the images fill their containers */
+    object-fit: cover; /* Resize the image while maintaining aspect ratio */
+}
