@@ -39,7 +39,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $p_orders = Order::where('payment_status', 'paid')->get();
+        $up_orders = Order::where('payment_status', 'unpaid')->get();
+        return view('admin.home', compact('p_orders','up_orders'));
     }
 
     public function dobaOrder()

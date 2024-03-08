@@ -223,48 +223,60 @@
                             </a>
                         </div>
                         <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
+
+                            <li>Address: 829 W Palmdale Blvd, Suite 133
+                                Palmdale, California 93551</li>
                             <li>Email: info@naturecheckout.com</li>
                         </ul>
                         <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a target="_blank" href="https://www.facebook.com/Naturecheckout"><i class="fa fa-facebook"></i></a>
+                            <a target="_blank" href="https://www.instagram.com/naturecheckout"><i class="fa fa-instagram"></i></a>
+                            <a target="_blank" href="https://twitter.com/naturecheckout"><i class="fa fa-twitter"></i></a>
+                            <a target="_blank" href="https://www.pinterest.com/Naturecheckout"><i class="fa fa-pinterest"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1">
                     <div class="footer-widget">
-                        <h5>Information</h5>
+                        <h5>Connect</h5>
                         <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Serivius</a></li>
+                            <li class=""><a href="{{ url('/') }}">Home</a></li>
+                            <li class=""><a href="{{ route('shop-page') }}">Shop</a></li>
+                            <li class=""><a href="{{ route('trending-products') }}">Trending Products</a></li>
+                            <li class=""><a href="{{ url('shopping-cart') }}">Shopping Cart</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2">
                     <div class="footer-widget">
-                        <h5>My Account</h5>
-                        <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Shopping Cart</a></li>
-                            <li><a href="#">Shop</a></li>
-                        </ul>
+                        <h5>Categories</h5>
+                        @php
+                            shuffle($categoryData);
+                        @endphp
+
+                        @foreach ($categoryData as $index => $category)
+                            @if ($index < 6)
+                                <ul>
+                                    <li><a href="{{ route('cat-products', ['catId' => $category['catId'], 'catName' => $category['catName']]) }}">{{ $category['catName'] }}</a></li>
+                                </ul>
+                            @endif
+                        @endforeach
+
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="newslatter-item">
-                        <h5>Join Our Newsletter Now</h5>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
+                    <div class="footer-widget">
+                        <h5>Contact Us</h5>
+                        {{-- <p>Get E-mail updates about our latest shop and special offers.</p>
                         <form action="#" class="subscribe-form">
                             <input type="text" placeholder="Enter Your Mail">
                             <button type="button">Subscribe</button>
-                        </form>
+                        </form> --}}
+                        <ul>
+                            <li class="text-light">Address: 829 W Palmdale Blvd, Suite 133
+                                Palmdale, California 93551</li>
+                            <li class="text-light">Email: info@naturecheckout.com</li>
+                        </ul>
                     </div>
                 </div>
             </div>

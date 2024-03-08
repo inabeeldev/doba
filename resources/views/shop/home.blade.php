@@ -12,14 +12,14 @@
                 <div class="row">
                     <div class="col-lg-5">
                         {{-- <span>Bag,kids</span> --}}
-                        <h1>Black friday</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore</p>
+                        <h1>{{ \Carbon\Carbon::now()->format('l') }} Sale</h1>
+                        <p>Enjoy exclusive discounts every {{ strtolower(\Carbon\Carbon::now()->format('l')) }} at our store! Hurry up and grab the best deals before they're gone!</p>
+
                         <a href="{{ url('/shop') }}" class="primary-btn">Shop Now</a>
                     </div>
                 </div>
                 <div class="off-card">
-                    <h2>Sale <span>50%</span></h2>
+                    <h2>Sale Upto<span>50%</span></h2>
                 </div>
             </div>
         </div>
@@ -28,14 +28,14 @@
                 <div class="row">
                     <div class="col-lg-5">
                         {{-- <span>Bag,kids</span> --}}
-                        <h1>Black friday</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore</p>
+                        <h1>{{ \Carbon\Carbon::now()->format('l') }} Sale</h1>
+                        <p>Enjoy exclusive discounts every {{ strtolower(\Carbon\Carbon::now()->format('l')) }} at our store! Hurry up and grab the best deals before they're gone!</p>
+
                         <a href="{{ url('/shop') }}" class="primary-btn">Shop Now</a>
                     </div>
                 </div>
                 <div class="off-card">
-                    <h2>Sale <span>50%</span></h2>
+                    <h2>Sale Upto<span>50%</span></h2>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Beauty & Health</h2>
+                    <h2>Items Of The Week</h2>
                 </div>
             </div>
             <div class="col-lg-12 order-1 order-lg-2">
@@ -158,10 +158,10 @@
             <div class="col-lg-8">
                 <div class="filter-control">
                     <ul>
-                        <li class="active">Clothings</li>
-                        <li>HandBag</li>
+                        <li class="active">Recently Added</li>
+                        {{-- <li>HandBag</li>
                         <li>Shoes</li>
-                        <li>Accessories</li>
+                        <li>Accessories</li> --}}
                     </ul>
                 </div>
                 <div class="product-slider owl-carousel">
@@ -204,17 +204,18 @@
 <!-- Man Banner Section End -->
 
 <!-- Deal Of The Week Section Begin-->
-<section class="deal-of-week set-bg spad" data-setbg="{{ asset('public/customer/img/time-bg.jpg') }}">
+<section class="deal-of-week set-bg spad" style="background: #F8F8F0">
     <div class="container">
-        <div class="col-lg-6 text-center">
+        <div class="col-lg-12 text-center">
             <div class="section-title">
-                <h2>Deal Of The Week</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br /> do ipsum dolor sit amet,
-                    consectetur adipisicing elit </p>
-                <div class="product-price">
+                <h2>Deals Of The Week</h2>
+                <p>Discover our amazing deals of the week and save big on your favorite items! Whether you're shopping for electronics, fashion, or home goods, we've got something for everyone. Don't miss out!</p>
+
+
+                {{-- <div class="product-price">
                     $35.00
                     <span>/ HanBag</span>
-                </div>
+                </div> --}}
             </div>
             <div class="countdown-timer" id="countdown">
                 <div class="cd-item">
@@ -234,7 +235,7 @@
                     <p>Secs</p>
                 </div>
             </div>
-            <a href="#" class="primary-btn">Shop Now</a>
+            <a href="{{ route('shop-page') }}" class="primary-btn">Shop Now</a>
         </div>
     </div>
 </section>
@@ -255,10 +256,10 @@
             <div class="col-lg-8 offset-lg-1">
                 <div class="filter-control">
                     <ul>
-                        <li class="active">Clothings</li>
-                        <li>HandBag</li>
+                        <li class="active">Recently Added</li>
+                        {{-- <li>HandBag</li>
                         <li>Shoes</li>
-                        <li>Accessories</li>
+                        <li>Accessories</li> --}}
                     </ul>
                 </div>
                 <div class="product-slider owl-carousel">
@@ -300,7 +301,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Electronics</h2>
+                    <h2>New Arrivals</h2>
                 </div>
             </div>
             <div class="col-lg-12 order-1 order-lg-2">

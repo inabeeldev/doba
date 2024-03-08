@@ -49,11 +49,17 @@ class ShopController extends Controller
 
     public function home(Request $request)
     {
-        $products_urls = [
-            "https://openapi.doba.com/api/goods/doba/spu/list?catId=AnDbvgoDFcVY&pageNumber=1&pageSize=500&shipFrom=US&shipTo=US",
-            "https://openapi.doba.com/api/goods/doba/spu/list?catId=WCVZbTPQFYDi&pageNumber=1&pageSize=500&shipFrom=US&shipTo=US",
-            "https://openapi.doba.com/api/goods/doba/spu/list?catId=rnvgbAYilcDw&pageNumber=1&pageSize=500&shipFrom=US&shipTo=US",
-            "https://openapi.doba.com/api/goods/doba/spu/list?catId=rKvSDFctCoVA&pageNumber=1&pageSize=500&shipFrom=US&shipTo=US",
+            $catIds = ['BovRVPJymYDO', 'rEqHbnYtsPDQ', 'rsVMvcojyPbw','riqKbocWNJDZ','AnDbvgoDFcVY']; // Add more category IDs as needed
+            $catIds2 = ['AcvdbgJfYPVN','ZjbtDvoRFcVl','TzVHDqcQaPbO','BpvWbAPOIcqo','BIDHVAPidJbn']; // Add more category IDs as needed
+            shuffle($catIds); // Shuffle the array of category IDs
+            shuffle($catIds2); // Shuffle the array of category IDs
+            $selectedCatId = array_pop($catIds); // Select one ID at a time from the shuffled array
+            $selectedCatId2 = array_pop($catIds2); // Select one ID at a time from the shuffled array
+            $products_urls = [
+            "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
+            "https://openapi.doba.com/api/goods/doba/spu/list?catId=WCVZbTPQFYDi&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
+            "https://openapi.doba.com/api/goods/doba/spu/list?catId=rnvgbAYilcDw&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
+            "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId2&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
         ];
 
         $productData = [];

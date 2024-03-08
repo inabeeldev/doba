@@ -4,6 +4,8 @@
 
 
 
+
+
 <!-- Hero Section Begin -->
 <section class="hero-section">
     <div class="hero-items owl-carousel">
@@ -11,15 +13,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
-                        {{-- <span>Bag,kids</span> --}}
-                        <h1>Black friday</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore</p>
+                        <h1>{{ \Carbon\Carbon::now()->format('l') }} Sale</h1>
+                        <p>Enjoy exclusive discounts every {{ strtolower(\Carbon\Carbon::now()->format('l')) }} at our store! Hurry up and grab the best deals before they're gone!</p>
+
                         <a href="{{ url('/shop') }}" class="primary-btn">Shop Now</a>
                     </div>
                 </div>
                 <div class="off-card">
-                    <h2>Sale <span>50%</span></h2>
+                    <h2>Sale Upto<span>50%</span></h2>
                 </div>
             </div>
         </div>
@@ -27,22 +28,20 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
-                        {{-- <span>Bag,kids</span> --}}
-                        <h1>Black friday</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore</p>
+                        <h1>{{ \Carbon\Carbon::now()->format('l') }} Sale</h1>
+                        <p>Enjoy exclusive discounts every {{ strtolower(\Carbon\Carbon::now()->format('l')) }} at our store! Hurry up and grab the best deals before they're gone!</p>
+
                         <a href="{{ url('/shop') }}" class="primary-btn">Shop Now</a>
                     </div>
                 </div>
                 <div class="off-card">
-                    <h2>Sale <span>50%</span></h2>
+                    <h2>Sale Upto<span>50%</span></h2>
                 </div>
             </div>
         </div>
     </div>
 </section>
 <!-- Hero Section End -->
-
 
 
 <!-- Product Shop Section Begin -->
