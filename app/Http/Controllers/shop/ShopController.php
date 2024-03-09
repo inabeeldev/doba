@@ -733,10 +733,10 @@ public function checkoutStore(Request $request)
                             'addr1' => $order['shippingAddress']['addr1'],
                             'addr2' => $order['shippingAddress']['addr2'],
                             'phoneExtension' => $order['shippingAddress']['phoneExtension'],
-                            'payment_status' => 'unpaid', // Assuming the initial status is unpaid
+                            'payment_status' => 'paid', // Assuming the initial status is unpaid
                         ]);
                     }
-
+                    session()->forget('cart');
                     return redirect()->route('thank-you-page');
                 }
 

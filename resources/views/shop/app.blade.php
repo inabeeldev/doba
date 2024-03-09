@@ -41,10 +41,7 @@
                         <i class=" fa fa-envelope"></i>
                         info@naturecheckout.com
                     </div>
-                    <div class="phone-service">
-                        <i class=" fa fa-phone"></i>
-                        +65 11.188.888
-                    </div>
+
                 </div>
                 <div class="ht-right">
                     {{-- <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a> --}}
@@ -52,26 +49,24 @@
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="{{ asset('public/customer/img/flag-1.jpg') }}" data-imagecss="flag yt"
                                 data-title="English">English</option>
-                            <option value='yu' data-image="{{ asset('public/customer/img/flag-2.jpg') }}" data-imagecss="flag yu"
-                                data-title="Bangladesh">German </option>
                         </select>
                     </div>
                     <div class="top-social">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
+                        <a target="_blank" href="https://www.facebook.com/Naturecheckout"><i class="fa fa-facebook"></i></a>
+                        <a target="_blank" href="https://www.instagram.com/naturecheckout"><i class="fa fa-instagram"></i></a>
+                        <a target="_blank" href="https://twitter.com/naturecheckout"><i class="fa fa-twitter"></i></a>
+                        <a target="_blank" href="https://www.pinterest.com/Naturecheckout"><i class="fa fa-pinterest"></i></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="inner-header">
+            <div class="inner-header" style="padding-top: 45px">
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
-                        <div class="logo">
+                        <div class="logo" style="padding: 0px">
                             <a href="{{ url('/') }}" style="font-size: 20px; color: darkorange; font-weight: bolder;">
-                                NatureCheckout.
+                                <img src="{{ asset('public/customer/img/logo/logo3.png') }}" alt="Nature Checkout" style="position: relative; bottom: 40px; max-width:80%">
                             </a>
                         </div>
                     </div>
@@ -219,7 +214,7 @@
                     <div class="footer-left">
                         <div class="footer-logo">
                             <a href="{{ url('/') }}" style="font-size: 20px; color: darkorange; font-weight: bolder;">
-                                NatureCheckout.
+                                <img src="{{ asset('public/customer/img/logo/logo3.png') }}" alt="Nature Checkout" style="max-width:45%">
                             </a>
                         </div>
                         <ul>

@@ -413,11 +413,11 @@ ol {
 }
 
 .inner-header {
-	padding: 39px 0;
+	/* padding: 39px 0; */
 }
 
 .inner-header .logo {
-	padding: 12px 0;
+	padding: 0px 0;
 }
 
 .inner-header .logo a {
@@ -859,7 +859,7 @@ ol {
 .hero-items .off-card {
 	height: 154px;
 	width: 154px;
-	padding-top: 40px;
+	padding-top: 20px;
 	border-radius: 50%;
 	text-align: center;
 	line-height: 140px;

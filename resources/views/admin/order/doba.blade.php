@@ -71,7 +71,7 @@
                     <td>{{ $order['ordBatchId'] }}</td>
                     <td>{{ $order['totalPay'] }}</td>
                     @if(empty($order['waitingPayOrderList']))
-                        <td>Paid</td>
+                        <td>Closed</td>
                     @else
                         <td>Unpaid</td>
                     @endif
