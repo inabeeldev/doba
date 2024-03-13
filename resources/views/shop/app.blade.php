@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ asset('public/customer/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('public/customer/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('public/customer/css/style2.css') }}" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 
 </head>
 
@@ -40,6 +42,10 @@
                     <div class="mail-service">
                         <i class=" fa fa-envelope"></i>
                         info@naturecheckout.com
+                    </div>
+                    <div class="phone-service">
+                        <i class=" fa fa-truck"></i>
+                        <b>Free Shipping for all Orders above $99</b>
                     </div>
 
                 </div>
@@ -148,31 +154,29 @@
                 <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
-                        <span>All departments</span>
+                        <span>All Categories</span>
                         <ul class="depart-hover">
                             @foreach($categoryData as $category)
                                 <li class="main-category">
                                     <a href="{{ route('cat-products', ['catId' => $category['catId'], 'catName' => $category['catName']]) }}">
                                         {{ $category['catName'] }}
-
                                     </a>
                                     @if(isset($category['node']))
                                     <div class="sub-categories">
                                         <ul>
                                             @foreach($category['node'] as $subCategory)
-                                                <li><a href="{{ route('cat-products', ['catId' => $subCategory['catId'], 'catName' => $subCategory['catName']]) }}">{{ $subCategory['catName'] }}</a></li>
-                                                <!-- You can add another nested loop here for deeper levels if needed -->
-                                                {{-- @if(isset($subCategory['node']))
+                                                <li class="sub-category">
+                                                    <a href="{{ route('cat-products', ['catId' => $subCategory['catId'], 'catName' => $subCategory['catName']]) }}">{{ $subCategory['catName'] }}</a>
+                                                    @if(isset($subCategory['node']))
                                                     <div class="sub-sub-categories">
                                                         <ul>
-                                                            @foreach($subCategory['node'] as $nestedSubCategory)
-
-                                                                <li><a href="#">{{ $nestedSubCategory['catName'] }}</a></li>
-                                                                <!-- Add more nested loops if needed -->
+                                                            @foreach($subCategory['node'] as $subSubCategory)
+                                                                <li><a href="{{ route('cat-products', ['catId' => $subSubCategory['catId'], 'catName' => $subSubCategory['catName']]) }}">{{ $subSubCategory['catName'] }}</a></li>
                                                             @endforeach
                                                         </ul>
                                                     </div>
-                                                @endif --}}
+                                                    @endif
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -182,6 +186,7 @@
                         </ul>
                     </div>
                 </div>
+
 
 
 
@@ -210,7 +215,7 @@
     <footer class="footer-section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="footer-left">
                         <div class="footer-logo">
                             <a href="{{ url('/') }}" style="font-size: 20px; color: darkorange; font-weight: bolder;">
@@ -219,9 +224,9 @@
                         </div>
                         <ul>
 
-                            <li>Address: 829 W Palmdale Blvd, Suite 133
-                                Palmdale, California 93551</li>
-                            <li>Email: info@naturecheckout.com</li>
+                            <li>
+                                We provide convenient and expeditious service to all users (merchants and consumers) in areas of consumer spending. Our service is to improve merchant - customer relations while offering positive contribution to the overall economy.
+                            </li>
                         </ul>
                         <div class="footer-social">
                             <a target="_blank" href="https://www.facebook.com/Naturecheckout"><i class="fa fa-facebook"></i></a>
@@ -259,7 +264,7 @@
 
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="footer-widget">
                         <h5>Contact Us</h5>
                         {{-- <p>Get E-mail updates about our latest shop and special offers.</p>
