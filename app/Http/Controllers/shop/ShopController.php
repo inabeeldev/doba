@@ -71,7 +71,7 @@ class ShopController extends Controller
         $productData = [];
 
         // for timer products
-        $p_url = "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=1&pageSize=3&shipFrom=US&shipTo=US";
+        $p_url = "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=1&pageSize=4&shipFrom=US&shipTo=US";
         $pResponse = Http::withHeaders($this->headers)->get($p_url);
         if ($pResponse->successful()) {
             $responseData2 = $pResponse->json();
@@ -94,7 +94,7 @@ class ShopController extends Controller
                 });
 
                 // Take the first 10 elements as random products
-                $randomProducts = array_slice($filteredProducts, 0, 9);
+                $randomProducts = array_slice($filteredProducts, 0, 12);
 
                 $productData[] = $randomProducts;
             } else {
@@ -401,8 +401,20 @@ class ShopController extends Controller
 
     public function cart()
     {
+
+        $catIds2 = ['AcvdbgJfYPVN','ZjbtDvoRFcVl','TzVHDqcQaPbO','BpvWbAPOIcqo','BIDHVAPidJbn']; // Add more category IDs as needed
+        shuffle($catIds2); // Shuffle the array of category IDs
+        $selectedCatId2 = array_pop($catIds2); // Select one ID at a time from the shuffled array
+        $p_url = "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId2&pageNumber=1&pageSize=12&shipFrom=US&shipTo=US";
+        $pResponse = Http::withHeaders($this->headers)->get($p_url);
+        if ($pResponse->successful()) {
+            $responseData2 = $pResponse->json();
+
+            $products2 = $responseData2['businessData']['data']['goodsList'];
+        }
         return view('shop.cart', [
-            'categoryData' => $this->categoryData
+            'categoryData' => $this->categoryData,
+            'products2' => $products2
         ]);
     }
 

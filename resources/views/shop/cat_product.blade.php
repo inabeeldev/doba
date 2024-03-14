@@ -58,7 +58,7 @@
 
                 @if($totalPages > 1)
                     <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
+                        <ul class="pagination pagination-lg justify-content-center">
                             @if($currentPage > 1)
                                 <li class="page-item">
                                     <a class="page-link" href="{{ url('cat-products/' . $catId . '/' . $catName . '?page=1') }}" aria-label="First">

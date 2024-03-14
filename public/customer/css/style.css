@@ -365,7 +365,7 @@ ol {
 	line-height: 27px;
 	padding-top: 15px;
 	padding-bottom: 12px;
-	padding-left: 20px;
+	padding-left: 320px;
 }
 
 .header-top .ht-left .phone-service i {
@@ -1318,7 +1318,7 @@ ol {
 	display: inline-block;
 	background: #e0e0e0;
 	margin-right: 5px;
-	padding: 10px 14px;
+	padding: 3px 5px;
 	border-radius: 5px;
 }
 
@@ -1326,11 +1326,11 @@ ol {
 	color: #7D9B3C;
 	font-weight: 700;
 	line-height: 30px;
-	font-size: 20px;
+	font-size: 15px;
 }
 
 .countdown-timer2 .cd-item p {
-	font-size: 12px;
+	font-size: 10px;
 	color: #b2b2b2;
 	margin-bottom: 0;
 	text-transform: uppercase;
@@ -3931,7 +3931,7 @@ ol {
 
 @media only screen and (min-width: 1200px) {
 	.container {
-		max-width: 1170px;
+		max-width: 1400px;
 	}
 }
 

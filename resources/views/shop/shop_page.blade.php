@@ -9,36 +9,20 @@
 <!-- Hero Section Begin -->
 <section class="hero-section">
     <div class="hero-items owl-carousel">
-        <div class="single-hero-items set-bg" data-setbg="{{ asset('public/customer/img/hero-1.jpg') }}">
+        <div class="single-hero-items set-bg" data-setbg="{{ asset('public/customer/img/hero-4.jpg') }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
-                        <h1>{{ \Carbon\Carbon::now()->format('l') }} Sale</h1>
-                        <p>Enjoy exclusive discounts every {{ strtolower(\Carbon\Carbon::now()->format('l')) }} at our store! Hurry up and grab the best deals before they're gone!</p>
+                        <h1>Flash {{ \Carbon\Carbon::now()->format('F') }} Sale</h1>
+                        <p>Enjoy exclusive discounts every month at our store! Hurry up and grab the best deals before they're gone!</p>
 
                         <a href="{{ url('/shop') }}" class="primary-btn">Shop Now</a>
                     </div>
                 </div>
-                <div class="off-card">
-                    <h2>Sale Upto<span>50%</span></h2>
-                </div>
-            </div>
-        </div>
-        <div class="single-hero-items set-bg" data-setbg="{{ asset('public/customer/img/hero-2.jpg') }}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <h1>{{ \Carbon\Carbon::now()->format('l') }} Sale</h1>
-                        <p>Enjoy exclusive discounts every {{ strtolower(\Carbon\Carbon::now()->format('l')) }} at our store! Hurry up and grab the best deals before they're gone!</p>
 
-                        <a href="{{ url('/shop') }}" class="primary-btn">Shop Now</a>
-                    </div>
-                </div>
-                <div class="off-card">
-                    <h2>Sale Upto<span>50%</span></h2>
-                </div>
             </div>
         </div>
+
     </div>
 </section>
 <!-- Hero Section End -->
@@ -58,7 +42,7 @@
                     <div class="row">
                         @foreach ($products['goodsList'] as $p)
 
-                        <div class="col-lg-4 col-sm-6">
+                        <div class="col-lg-3 col-sm-6">
                             <div class="product-item">
                                 <div class="pi-pic">
                                     <a href="{{ route('product-detail', $p['spuId']) }}">
@@ -95,7 +79,7 @@
 
                 @if($totalPages > 1)
                     <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
+                        <ul class="pagination pagination-lg justify-content-center">
                             @if($currentPage > 1)
                                 <li class="page-item">
                                     <a class="page-link" href="{{ url('shop?page=1') }}" aria-label="First">

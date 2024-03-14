@@ -65,3 +65,49 @@
 .fa {
     color: #7D9B3C;
 }
+
+
+.marquee-class {
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
+
+.marquee-item {
+    display: inline-block;
+    font-weight: bold;
+    color: #fff;
+    /* padding-right: 100px;  */
+    width: 100%;
+    animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+.header-top2 {
+    background: #7D9B3C;
+}
+
+
+.items-section2 {
+    padding: 65px 120px;
+}
+
+
+.pagination .page-link {
+    color: #7D9B3C;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #7D9B3C;
+    border-color: #7D9B3C;
+}
+
+.pagination .page-link:hover {
+    color: white;
+    background-color: #7D9B3C;
+    border-color: #7D9B3C;
+}

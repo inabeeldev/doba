@@ -36,6 +36,15 @@
 
     <!-- Header Section Begin -->
     <header class="header-section">
+        <div class="header-top header-top2">
+            <div class="container">
+                <div class="marquee-class">
+                    <div class="marquee-item">New Items have been added to store</div>
+                    <div class="marquee-item">Get upto 50% off on Electronics items till end of this month</div>
+                </div>
+            </div>
+        </div>
+
         <div class="header-top">
             <div class="container">
                 <div class="ht-left">

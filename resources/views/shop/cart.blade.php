@@ -94,6 +94,56 @@
 <!-- Shopping Cart Section End -->
 
 
+<!-- Product Shop Section Begin -->
+<section class="product-shop spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Products You may also want</h2>
+                </div>
+            </div>
+            <div class="col-lg-12 order-1 order-lg-2">
+                <div class="product-list">
+                    <div class="row">
+                        @foreach ($products2 as $p)
+
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="product-item">
+                                <div class="pi-pic">
+                                    <a href="{{ route('product-detail', $p['spuId']) }}">
+                                        <img src="{{ $p['pictureUrl'] }}" alt="" class="product-img">
+                                    </a>
+                                    <div class="sale pp-sale">Sale</div>
+                                    <div class="icon">
+                                        <i class="icon_heart_alt"></i>
+                                    </div>
+                                    <ul>
+                                        <li class="w-icon active"><a href="{{ route('product-detail', $p['spuId']) }}">+ Add To Cart <i class="icon_bag_alt"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="pi-text">
+                                    <a href="{{ route('product-detail', $p['spuId']) }}">
+                                        <h5>{{ strlen($p['title']) > 50 ? substr($p['title'], 0, 50) . '...' : $p['title'] }}</h5>
+                                    </a>
+                                    <div class="product-price">
+                                        ${{ $p['maxPrice'] }}
+                                        <span>${{ $p['maxPrice'] + 5 }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @endforeach
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Shop Section End -->
+
 
 
 @endsection

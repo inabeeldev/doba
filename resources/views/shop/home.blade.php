@@ -120,6 +120,118 @@
 <!-- Banner Section End -->
 
 
+{{-- cat section --}}
+<div class="items-section2">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-2 col-sm-12">
+                <div class="category-1">
+                    <a href="{{ route('cat-products', ['catId' => 'AnDbvgoDFcVY', 'catName' => 'Beauty & Health']) }}">
+                        <img src="{{ asset('public/customer/img/category/beauty.jpg') }}" alt="Category 1" class="rounded-circle">
+                        <p class="text-center mt-3 font-weight-bold h5">Beauty & Health</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <div class="category-1">
+                    <a href="{{ route('cat-products', ['catId' => 'BpvWbAPOIcqo', 'catName' => 'Clothing, Shoes & Jewelry']) }}">
+                        <img src="{{ asset('public/customer/img/category/clothing.jpg') }}" alt="Category 2" class="rounded-circle">
+                        <p class="text-center mt-3 font-weight-bold h5">Clothing & Jewelry</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <div class="category-1">
+                    <a href="{{ route('cat-products', ['catId' => 'rRvPbBYtMJDn', 'catName' => 'Toys, Kids & Baby']) }}">
+                        <img src="{{ asset('public/customer/img/category/toys.jpg') }}" alt="Category 3" class="rounded-circle">
+                        <p class="text-center mt-3 font-weight-bold h5">Kids</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <div class="category-1">
+                    <a href="{{ route('cat-products', ['catId' => 'rKvSDFctCoVA', 'catName' => 'Electronics']) }}">
+                        <img src="{{ asset('public/customer/img/category/electronics.jpg') }}" alt="Category 4" class="rounded-circle">
+                        <p class="text-center mt-3 font-weight-bold h5">Electronics</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <div class="category-1">
+                    <a href="{{ route('cat-products', ['catId' => 'BovRVPJymYDO', 'catName' => 'Home, Garden & Tools']) }}">
+                        <img src="{{ asset('public/customer/img/category/home.jpg') }}" alt="Category 4" class="rounded-circle">
+                        <p class="text-center mt-3 font-weight-bold h5">Home & Garden</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Add more rows of categories here if needed -->
+    </div>
+</div>
+
+
+{{-- cat section end --}}
+
+
+
+
+
+<!-- Deals of day Begin -->
+<section class="blog-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Deals Of the Day</h2>
+                </div>
+            </div>
+            <div class="col-lg-12 order-1 order-lg-2">
+                <div class="row">
+                    @foreach ($products2 as $p)
+                    <div class="col-lg-3 col-sm-4">
+                        <div class="blog-item">
+                            <div class="bi-pic">
+                                <a href="{{ route('product-detail', $p['spuId']) }}">
+                                    <img src="{{ $p['pictureUrl'] }}" alt="">
+                                </a>
+                            </div>
+                            <div class="bi-text text-center">
+                                <a href="{{ route('product-detail', $p['spuId']) }}">
+                                    <h4>{{ strlen($p['title']) > 40 ? substr($p['title'], 0, 40) . '...' : $p['title'] }}</h4>
+                                </a>
+                                <p class="mb-3" style="font-size: 22px; font-weight:bolder">${{ $p['maxPrice'] }}</p>
+                                <div class="countdown-timer2" id="countdownp">
+                                    <div class="cd-item">
+                                        <span>01</span>
+                                        <p>Days</p>
+                                    </div>
+                                    <div class="cd-item">
+                                        <span>9</span>
+                                        <p>Hrs</p>
+                                    </div>
+                                    <div class="cd-item">
+                                        <span>40</span>
+                                        <p>Mins</p>
+                                    </div>
+                                    <div class="cd-item">
+                                        <span>52</span>
+                                        <p>Secs</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- deals of day End -->
+
+
 
 <!-- Product Shop Section Begin -->
 <section class="product-shop spad">
@@ -135,8 +247,8 @@
                     <div class="row">
                         @foreach ($productData[0] as $p)
 
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="product-item mb-5">
                                 <div class="pi-pic">
                                     <a href="{{ route('product-detail', $p['spuId']) }}">
                                         <img src="{{ $p['pictureUrl'] }}" alt="" class="product-img">
@@ -344,67 +456,6 @@
 
 
 
-<!-- Blog Section Begin -->
-<section class="blog-section spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title">
-                    <h2>Deals Of the Day</h2>
-                </div>
-            </div>
-            <div class="col-lg-12 order-1 order-lg-2">
-                <div class="row">
-                    @foreach ($products2 as $p)
-                    <div class="col-lg-4 col-sm-4">
-                        <div class="blog-item">
-                            <div class="bi-pic">
-                                <a href="{{ route('product-detail', $p['spuId']) }}">
-                                    <img src="{{ $p['pictureUrl'] }}" alt="">
-                                </a>
-                            </div>
-                            <div class="bi-text text-center">
-                                <a href="{{ route('product-detail', $p['spuId']) }}">
-                                    <h4>{{ strlen($p['title']) > 40 ? substr($p['title'], 0, 40) . '...' : $p['title'] }}</h4>
-                                </a>
-                                <p class="mb-3" style="font-size: 22px; font-weight:bolder">${{ $p['maxPrice'] }}</p>
-                                <div class="countdown-timer2" id="countdown2">
-                                    <div class="cd-item">
-                                        <span>01</span>
-                                        <p>Days</p>
-                                    </div>
-                                    <div class="cd-item">
-                                        <span>9</span>
-                                        <p>Hrs</p>
-                                    </div>
-                                    <div class="cd-item">
-                                        <span>40</span>
-                                        <p>Mins</p>
-                                    </div>
-                                    <div class="cd-item">
-                                        <span>52</span>
-                                        <p>Secs</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    @endforeach
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Blog Section End -->
-
-
-
-
-
-
-
 
 
 
@@ -425,7 +476,7 @@
                     <div class="row">
                         @foreach ($productData[3] as $p)
 
-                        <div class="col-lg-4 col-sm-6">
+                        <div class="col-lg-3 col-sm-6">
                             <div class="product-item">
                                 <div class="pi-pic">
                                     <a href="{{ route('product-detail', $p['spuId']) }}">
@@ -525,6 +576,15 @@
 </div>
 <!-- Instagram Section End -->
 
+
+@php
+    $blogt1 = 'Find The Collection Of Beauty Products For Women At Nature Checkout.';
+    $blogt2 = 'Decorate Your Home With Unique Home Decorative Items Available At The Doorstep.';
+    $blogt3 = 'Discover Nature Checkout, Haven For Men’s & Women’s Fashion Accessories';
+    $blogd1 = 'Nature Checkout, your ultimate destination for health and beauty products, understands the importance of pampering your inner and outer wellness. ';
+    $blogd2 = 'Step into  our online store where beauty meets functionality, where creativity knows no bounds, and where your living space becomes a canvas for artistic expression.';
+    $blogd3 = 'Discover the latest trends and update your style with our extensive collection of fashion accessories at Nature Checkout.';
+@endphp
 <!-- Latest Blog Section Begin -->
 <section class="latest-blog spad">
     <div class="container">
@@ -543,14 +603,14 @@
                         <div class="tag-list">
                             <div class="tag-item">
                                 <i class="fa fa-calendar-o"></i>
-                                May 4,2019
+                                May 14,2024
                             </div>
 
                         </div>
                         <a href="#">
-                            <h4>The Best Street Style From London Fashion Week</h4>
+                            <h4>{{ strlen($blogt1) > 50 ? substr($blogt1, 0, 50) . '...' : $blogt1 }}</h4>
                         </a>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                        <p>{{ strlen($blogd1) > 100 ? substr($blogd1, 0, 100) . '...' : $blogd1 }} </p>
                     </div>
                 </div>
             </div>
@@ -561,14 +621,14 @@
                         <div class="tag-list">
                             <div class="tag-item">
                                 <i class="fa fa-calendar-o"></i>
-                                May 4,2019
+                                May 14,2024
                             </div>
 
                         </div>
                         <a href="#">
-                            <h4>Vogue's Ultimate Guide To Autumn/Winter 2019 Shoes</h4>
+                            <h4>{{ strlen($blogt2) > 50 ? substr($blogt2, 0, 50) . '...' : $blogt2 }}</h4>
                         </a>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                        <p>{{ strlen($blogd2) > 100 ? substr($blogd2, 0, 100) . '...' : $blogd2 }} </p>
                     </div>
                 </div>
             </div>
@@ -579,14 +639,14 @@
                         <div class="tag-list">
                             <div class="tag-item">
                                 <i class="fa fa-calendar-o"></i>
-                                May 4,2019
+                                May 14,2024
                             </div>
 
                         </div>
                         <a href="#">
-                            <h4>How To Brighten Your Wardrobe With A Dash Of Lime</h4>
+                            <h4>{{ strlen($blogt3) > 50 ? substr($blogt3, 0, 50) . '...' : $blogt3 }}</h4>
                         </a>
-                        <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                        <p>{{ strlen($blogd3) > 100 ? substr($blogd3, 0, 100) . '...' : $blogd3 }} </p>
                     </div>
                 </div>
             </div>
@@ -649,45 +709,61 @@
                         <div class="card">
                             <div class="card-heading active">
                                 <a class="active" data-toggle="collapse" data-target="#collapseOne">
-                                    Is There Anything I Should Bring?
+                                    How do I place an order on Nature Checkout?
                                 </a>
                             </div>
                             <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
                                 <div class="card-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                        consequat.</p>
+                                    <p>Ordering from Nature Checkout is easy! Simply browse our
+                                        products, click on the item you want, choose your
+                                        options/specs (size, color, etc.), and click "Add to Cart."
+                                        When you're ready to complete your purchase, click the
+                                        shopping cart icon and follow the checkout process.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-heading">
                                 <a data-toggle="collapse" data-target="#collapseTwo">
-                                    Where Can I Find Market Research Reports?
+                                    How long will the delivery take?
                                 </a>
                             </div>
                             <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
                                 <div class="card-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                        consequat.</p>
+                                    <p>The delivery time depends on your location and the shipping
+                                        method you choose during the checkout process. Our standard
+                                        shipping option typically takes between 2 to 10 business
+                                        days, while express shipping delivers within 5 business
+                                        days.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="card">
                             <div class="card-heading">
                                 <a data-toggle="collapse" data-target="#collapseThree">
-                                    Where Can I Find The Wall Street Journal?
+                                    What payment methods do you accept?
                                 </a>
                             </div>
                             <div id="collapseThree" class="collapse" data-parent="#accordionExample">
                                 <div class="card-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                        consequat.</p>
+                                    <p>We accept major credit and debit cards, including Visa,
+                                        Mastercard, American Express, and Discover.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-heading">
+                                <a data-toggle="collapse" data-target="#collapse4">
+                                    What if I have a question about a product or need
+                                    assistance?
+                                </a>
+                            </div>
+                            <div id="collapse4" class="collapse" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <p>We're here to help! Feel free to contact our Customer
+                                        Support team via email at info@naturecheckout.com or contact
+                                        helpdesk during our business hours. We're always happy to
+                                        assist with any inquiries or concerns.</p>
                                 </div>
                             </div>
                         </div>
