@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ asset('public/customer/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('public/customer/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('public/customer/css/style2.css') }}" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> --}}
 
 
 </head>
@@ -81,7 +81,7 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="logo" style="padding: 0px">
                             <a href="{{ url('/') }}" style="font-size: 20px; color: darkorange; font-weight: bolder;">
-                                <img src="{{ asset('public/customer/img/logo/logo3.png') }}" alt="Nature Checkout" style="position: relative; bottom: 40px; max-width:80%">
+                                <img src="{{ asset('public/customer/img/logo/logo3.png') }}" alt="Nature Checkout" style="position: relative; bottom: 40px; max-width:45%">
                             </a>
                         </div>
                     </div>
@@ -228,7 +228,7 @@
                     <div class="footer-left">
                         <div class="footer-logo">
                             <a href="{{ url('/') }}" style="font-size: 20px; color: darkorange; font-weight: bolder;">
-                                <img src="{{ asset('public/customer/img/logo/logo3.png') }}" alt="Nature Checkout" style="max-width:45%">
+                                <img src="{{ asset('public/customer/img/logo/logo3.png') }}" alt="Nature Checkout" style="max-width:30%">
                             </a>
                         </div>
                         <ul>
@@ -238,7 +238,7 @@
                             </li>
                         </ul>
                         <div class="footer-social">
-                            <a target="_blank" href="https://www.facebook.com/Naturecheckout"><i class="fa fa-facebook"></i></a>
+                            <a target="_blank" href="https://www.facebook.com/Naturecheckout"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             <a target="_blank" href="https://www.instagram.com/naturecheckout"><i class="fa fa-instagram"></i></a>
                             <a target="_blank" href="https://twitter.com/naturecheckout"><i class="fa fa-twitter"></i></a>
                             <a target="_blank" href="https://www.pinterest.com/Naturecheckout"><i class="fa fa-pinterest"></i></a>

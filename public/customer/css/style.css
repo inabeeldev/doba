@@ -1344,8 +1344,8 @@ ol {
 .man-banner {
 	padding-right: 65px;
 	padding-left: 65px;
-	padding-top: 80px;
-	padding-bottom: 80px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 /*---------------------
@@ -1579,7 +1579,7 @@ ol {
 	top: 0;
 	height: 100%;
 	width: 100%;
-	background: #7D9B3C;
+	background: #fff;
 	content: "";
 	border-radius: 50%;
 	opacity: 0;
@@ -1741,8 +1741,13 @@ ol {
 -----------------------*/
 
 .product-shop {
-	padding-top: 80px;
-	padding-bottom: 80px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.product-shop2 {
+	padding-top: 60px;
+	padding-bottom: 60px;
 }
 
 .filter-widget {
@@ -3097,8 +3102,8 @@ ol {
 -----------------------*/
 
 .blog-section {
-	padding-top: 80px;
-	padding-bottom: 80px;
+	padding-top: 45px;
+	padding-bottom: 45px;
 }
 
 .blog-section .loading-more {
@@ -4102,17 +4107,18 @@ ol {
 		float: none;
 		text-align: center;
 	}
-	.header-top .ht-left,
-	.header-top .top-social {
+	.header-top .ht-left{
 		display: none;
 	}
 	.header-top .ht-right .login-panel {
 		padding-top: 9px;
 		padding-bottom: 7px;
 	}
-	.header-top .ht-right .lan-selector {
-		margin-top: 5px;
-		margin-bottom: 5px;
+	.header-top .ht-right .top-social {
+		padding-top: 15px;
+	}
+    .header-top .ht-right .lan-selector {
+		margin-top: 15px;
 	}
 	.inner-header .advanced-search .category-btn {
 		display: none;
@@ -4120,6 +4126,9 @@ ol {
 	.inner-header .advanced-search .input-group {
 		max-width: 100%;
 	}
+    /* .inner-header .advanced-search {
+		margin-top: 50px;
+	} */
 	.inner-header {
 		padding: 0;
 	}

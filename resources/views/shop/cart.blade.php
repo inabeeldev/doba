@@ -98,7 +98,7 @@
 <section class="product-shop spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mb-3">
                 <div class="section-title">
                     <h2>Products You may also want</h2>
                 </div>

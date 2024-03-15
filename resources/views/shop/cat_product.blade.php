@@ -8,10 +8,10 @@
 
 
 <!-- Product Shop Section Begin -->
-<section class="product-shop spad">
+<section class="product-shop2 spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mb-3">
                 <div class="section-title">
                     <h2>{{ $catName }}</h2>
                 </div>

@@ -4,10 +4,10 @@
 
 
 <!-- Product Shop Section Begin -->
-<section class="product-shop spad">
+<section class="product-shop2 spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mb-3">
                 <div class="section-title">
                     <h4>Showing Results for '{{ $query }}'</h4>
                 </div>

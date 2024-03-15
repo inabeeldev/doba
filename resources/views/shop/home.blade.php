@@ -7,7 +7,7 @@
 <!-- Hero Section Begin -->
 <section class="hero-section">
     <div class="hero-items owl-carousel">
-        <div class="single-hero-items set-bg" data-setbg="{{ asset('public/customer/img/hero-1.jpg') }}">
+        <div class="single-hero-items set-bg single-hero-items-overlay" data-setbg="{{ asset('public/customer/img/hero-1.jpg') }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="single-hero-items set-bg" data-setbg="{{ asset('public/customer/img/hero-2.jpg') }}">
+        <div class="single-hero-items set-bg single-hero-items-overlay" data-setbg="{{ asset('public/customer/img/hero-2.jpg') }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
@@ -46,6 +46,11 @@
 
 <div class="banner-section2 spad">
 <div class="container-fluid">
+    <div class="col-lg-12 mt-5">
+        <div class="section-title">
+            <h2>Our Promises</h2>
+        </div>
+    </div>
 <div class="benefit-items">
     <div class="row">
         <div class="col-lg-4">
@@ -89,30 +94,41 @@
 <!-- Banner Section Begin -->
 <div class="banner-section spad">
     <div class="container-fluid">
+        <div class="col-lg-12">
+            <div class="section-title">
+                <h2>Trending Collections</h2>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-4">
-                <div class="single-banner">
-                    <img src="{{ asset('public/customer/img/banner-1.jpg') }}" alt="">
-                    <div class="inner-text">
-                        <h4>Men’s</h4>
+                <a href="{{ route('cat-products', ['catId' => 'AMqQVfPBoYDH', 'catName' => 'Baby']) }}">
+                    <div class="single-banner">
+                        <img src="{{ asset('public/customer/img/banner-1.jpg') }}" alt="">
+                        <div class="inner-text">
+                            <h4>Men’s</h4>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-lg-4">
-                <div class="single-banner">
-                    <img src="{{ asset('public/customer/img/banner-2.jpg') }}" alt="">
-                    <div class="inner-text">
-                        <h4>Women’s</h4>
+                <a href="{{ route('cat-products', ['catId' => 'rnvgbAYilcDw', 'catName' => 'Women']) }}">
+                    <div class="single-banner">
+                        <img src="{{ asset('public/customer/img/banner-2.jpg') }}" alt="">
+                        <div class="inner-text">
+                            <h4>Women’s</h4>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-lg-4">
-                <div class="single-banner">
-                    <img src="{{ asset('public/customer/img/banner-3.jpg') }}" alt="">
-                    <div class="inner-text">
-                        <h4>Kid’s</h4>
+                <a href="{{ route('cat-products', ['catId' => 'AMqQVfPBoYDH', 'catName' => 'Baby']) }}">
+                    <div class="single-banner">
+                        <img src="{{ asset('public/customer/img/banner-3.jpg') }}" alt="">
+                        <div class="inner-text">
+                            <h4>Kid’s</h4>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -121,9 +137,14 @@
 
 
 {{-- cat section --}}
-<div class="items-section2">
+<div class="">
     <div class="container-fluid">
         <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Popular Categories</h2>
+                </div>
+            </div>
             <div class="col-md-2 col-sm-12">
                 <div class="category-1">
                     <a href="{{ route('cat-products', ['catId' => 'AnDbvgoDFcVY', 'catName' => 'Beauty & Health']) }}">
@@ -177,7 +198,7 @@
 
 
 <!-- Deals of day Begin -->
-<section class="blog-section spad">
+<section class="blog-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -234,7 +255,7 @@
 
 
 <!-- Product Shop Section Begin -->
-<section class="product-shop spad">
+<section class="product-shop">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -577,7 +598,7 @@
 <!-- Instagram Section End -->
 
 
-@php
+{{-- @php
     $blogt1 = 'Find The Collection Of Beauty Products For Women At Nature Checkout.';
     $blogt2 = 'Decorate Your Home With Unique Home Decorative Items Available At The Doorstep.';
     $blogt3 = 'Discover Nature Checkout, Haven For Men’s & Women’s Fashion Accessories';
@@ -651,52 +672,15 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="benefit-items">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="single-benefit">
-                        <div class="sb-icon">
-                            <img src="{{ asset('public/customer/img/icon-1.png') }}" alt="">
-                        </div>
-                        <div class="sb-text">
-                            <h6>Free Shipping</h6>
-                            <p>For all order over 99$</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-benefit">
-                        <div class="sb-icon">
-                            <img src="{{ asset('public/customer/img/icon-2.png') }}" alt="">
-                        </div>
-                        <div class="sb-text">
-                            <h6>Delivery On Time</h6>
-                            <p>If good have prolems</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-benefit">
-                        <div class="sb-icon">
-                            <img src="{{ asset('public/customer/img/icon-1.png') }}" alt="">
-                        </div>
-                        <div class="sb-text">
-                            <h6>Secure Payment</h6>
-                            <p>100% secure payment</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
     </div>
 </section>
-<!-- Latest Blog Section End -->
+<!-- Latest Blog Section End --> --}}
 
 <!-- Faq Section Begin -->
 <div class="">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mt-5 mb-3">
                 <div class="section-title">
                     <h2>Frequently Asked Questions</h2>
                 </div>

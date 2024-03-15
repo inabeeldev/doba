@@ -21,7 +21,7 @@
 <!-- Breadcrumb Section Begin -->
 
 <!-- Product Shop Section Begin -->
-<section class="product-shop spad page-details">
+<section class="product-shop2 spad page-details">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -255,7 +255,7 @@
 <div class="related-products spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 mb-3">
                 <div class="section-title">
                     <h2>Related Products</h2>
                 </div>

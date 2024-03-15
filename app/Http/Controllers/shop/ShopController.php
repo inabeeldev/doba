@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -19,7 +20,7 @@ class ShopController extends Controller
 {
 
     protected $headers;
-    protected $categoryData;
+    // protected $categoryData;
 
     public function __construct()
     {
@@ -38,21 +39,27 @@ class ShopController extends Controller
         ];
 
         $categories_url = 'https://openapi.doba.com/api/category/doba/list';
-        $categoryResponse = Http::withHeaders($this->headers)->get($categories_url);
 
-        if ($categoryResponse->successful()) {
-            $this->categoryData = $categoryResponse->json()['businessData']['data'];
-        }
+        $categoryData = retry(5, function () use ($categories_url) {
+            $categoryResponse = Http::withHeaders($this->headers)->get($categories_url);
 
-        //  dd($this->categoryData);
+            if ($categoryResponse->successful()) {
+                return $categoryResponse->json()['businessData']['data'];
+            } else {
+                throw new Exception("Failed to retrieve category data from API.");
+            }
+        }, 1000); // Retry up to 5 times, with a delay of 1000 milliseconds (1 second) between retries
+
+        View::share('categoryData', $categoryData);
+
     }
 
     public function home(Request $request)
     {
-        while (empty($this->categoryData)) {
-            // Handle case where categoryData is not available
-            return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        }
+        // while (empty($this->categoryData)) {
+        //     // Handle case where categoryData is not available
+        //     return response()->json(['error' => 'Oops! Please refresh the page'], 500);
+        // }
 
 
             $catIds = ['BovRVPJymYDO', 'rEqHbnYtsPDQ', 'rsVMvcojyPbw','riqKbocWNJDZ','AnDbvgoDFcVY']; // Add more category IDs as needed
@@ -102,16 +109,13 @@ class ShopController extends Controller
                 return response()->json(['error' => 'Unable to fetch products'], $statusCode);
             }
         }
-        return view('shop.home', ['categoryData' => $this->categoryData, 'productData' => $productData , 'products2' => $products2]);
+        return view('shop.home', ['productData' => $productData , 'products2' => $products2]);
 
     }
 
     public function shop(Request $request)
     {
-        while (empty($this->categoryData)) {
-            // Handle case where categoryData is not available
-            return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        }
+
 
         $catIds = ['BovRVPJymYDO', 'rEqHbnYtsPDQ', 'rsVMvcojyPbw','riqKbocWNJDZ','AnDbvgoDFcVY','AcvdbgJfYPVN','ZjbtDvoRFcVl','TzVHDqcQaPbO','BpvWbAPOIcqo','BIDHVAPidJbn','AMqQVfPBoYDH','ApDjvTYfcJVh']; // Add more category IDs as needed
         shuffle($catIds); // Shuffle the array of category IDs
@@ -131,7 +135,6 @@ class ShopController extends Controller
             $totalPages = ceil($totalProducts / $pageSize);
 
             return view('shop.shop_page', [
-                'categoryData' => $this->categoryData,
                 'productData' => [
                     'currentPage' => $page,
                     'totalPages' => $totalPages,
@@ -151,10 +154,6 @@ class ShopController extends Controller
     public function trending(Request $request)
     {
 
-        while (empty($this->categoryData)) {
-            // Handle case where categoryData is not available
-            return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        }
         $catIds = ['ACDebtYQyoqZ', 'ruqPDMoqcYVS', 'WAbcVOJQoYDN','gdVvqkPtEJbK','rKvSDFctCoVA','rvVgDeoYKPbZ','AzVrqFYQeovL','TzVHDqcQaPbO','geVDqCYMrobh','gzVZDkPcfcqd','AMqQVfPBoYDH','ApDjvTYfcJVh']; // Add more category IDs as needed
         shuffle($catIds); // Shuffle the array of category IDs
         $selectedCatId = array_pop($catIds); // Select one ID at a time from the shuffled array
@@ -173,7 +172,6 @@ class ShopController extends Controller
             $totalPages = ceil($totalProducts / $pageSize);
 
             return view('shop.trending', [
-                'categoryData' => $this->categoryData,
                 'productData' => [
                     'currentPage' => $page,
                     'totalPages' => $totalPages,
@@ -213,10 +211,6 @@ class ShopController extends Controller
 
     public function search(Request $request)
     {
-        while (empty($this->categoryData)) {
-            // Handle case where categoryData is not available
-            return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        }
 
 
         $pageSize = 9; // Number of products per page
@@ -235,7 +229,6 @@ class ShopController extends Controller
             $totalPages = ceil($totalProducts / $pageSize);
 
             return view('shop.search_product', [
-                'categoryData' => $this->categoryData,
                 'productData' => [
                     'currentPage' => $page,
                     'totalPages' => $totalPages,
@@ -257,10 +250,9 @@ class ShopController extends Controller
 
     public function productDetail($spuId)
     {
-        while (empty($this->categoryData)) {
-            // Handle case where categoryData is not available
-            return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        }
+        // while (empty($this->categoryData)) {
+        //     return response()->json(['error' => 'Oops! Please refresh the page'], 500);
+        // }
         // while (empty($this->categoryData)) {
         //     usleep(900000); // Sleep for 0.5 seconds
         // }
@@ -292,7 +284,6 @@ class ShopController extends Controller
             // dd($productData);
             // Pass the product data and random related products to the view
             return view('shop.product_detail', [
-                'categoryData' => $this->categoryData,
                 'productData' => $productData,
                 'randomRelatedProducts' => $randomRelatedProducts ?? [],
             ]);
@@ -307,10 +298,7 @@ class ShopController extends Controller
 
     public function catProduct(Request $request, $catId, $catName)
     {
-        while (empty($this->categoryData)) {
-            // Handle case where categoryData is not available
-            return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        }
+
         // dd($page);
         $pageSize = 9; // Number of products per page
         $page = $request->query('page', 1);
@@ -333,7 +321,6 @@ class ShopController extends Controller
                 $totalPages = ceil($totalProducts / $pageSize);
 
                 return view('shop.cat_product', [
-                    'categoryData' => $this->categoryData,
                     'productData' => [
                         'currentPage' => $page,
                         'totalPages' => $totalPages,
@@ -413,7 +400,6 @@ class ShopController extends Controller
             $products2 = $responseData2['businessData']['data']['goodsList'];
         }
         return view('shop.cart', [
-            'categoryData' => $this->categoryData,
             'products2' => $products2
         ]);
     }
@@ -421,10 +407,7 @@ class ShopController extends Controller
 
 public function updateCartItem(Request $request)
 {
-    while (empty($this->categoryData)) {
-        // Handle case where categoryData is not available
-        return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-    }
+
     $itemNo = $request->input('itemNo');
     $quantity = $request->input('quantity');
 
@@ -448,10 +431,7 @@ public function updateCartItem(Request $request)
 
 public function removeCartItem(Request $request)
 {
-    while (empty($this->categoryData)) {
-        // Handle case where categoryData is not available
-        return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-    }
+
 
     $itemNo = $request->input('itemNo');
 
@@ -472,13 +452,8 @@ public function removeCartItem(Request $request)
 
     public function checkoutPage()
     {
-        while (empty($this->categoryData)) {
-            // Handle case where categoryData is not available
-            return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        }
-        return view('shop.checkout', [
-            'categoryData' => $this->categoryData
-        ]);
+
+        return view('shop.checkout');
     }
 
 
@@ -838,7 +813,6 @@ public function checkoutStore(Request $request)
 
 
                 return view('shop.thank_you', [
-                    'categoryData' => $this->categoryData,
                     'products' => $products,
                 ]);
             } else {
