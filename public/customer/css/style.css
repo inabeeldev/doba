@@ -365,7 +365,7 @@ ol {
 	line-height: 27px;
 	padding-top: 15px;
 	padding-bottom: 12px;
-	padding-left: 320px;
+	padding-left: 270px;
 }
 
 .header-top .ht-left .phone-service i {
@@ -399,7 +399,7 @@ ol {
 
 .header-top .ht-right .top-social {
 	float: right;
-	padding-right: 20px;
+	padding-right: 95px;
 	padding-top: 15px;
 	padding-bottom: 15px;
 	border-right: 1px solid #e5e5e5;
@@ -1409,7 +1409,7 @@ ol {
 	margin-top: 14px;
 }
 
-.instagram-photo .insta-item .inside-text h5 a {
+.instagram-photo .insta-item .inside-text h5 {
 	color: #ffffff;
 }
 

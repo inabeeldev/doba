@@ -91,7 +91,7 @@
                         <form action="{{ route('search') }}" method="get">
                             <div class="advanced-search">
                                 <div class="input-group">
-                                    <input class="searchbar-input typeahead" placeholder="What do you need?" type="text" name="query" id="query" value="{{ request()->input('query') }}">
+                                    <input class="searchbar-input typeahead" placeholder="What do you need?" type="text" name="query" id="query" value="{{ request()->input('query') }}" style="color: #000;">
                                     <button type="submit"><i class="ti-search"></i></button>
                                 </div>
                             </div>

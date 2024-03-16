@@ -101,7 +101,7 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <a href="{{ route('cat-products', ['catId' => 'AMqQVfPBoYDH', 'catName' => 'Baby']) }}">
+                <a href="{{ route('cat-products', ['catId' => 'grVyDtYRvJbB', 'catName' => 'Men']) }}">
                     <div class="single-banner">
                         <img src="{{ asset('public/customer/img/banner-1.jpg') }}" alt="">
                         <div class="inner-text">
@@ -148,7 +148,7 @@
             <div class="col-md-2 col-sm-12">
                 <div class="category-1">
                     <a href="{{ route('cat-products', ['catId' => 'AnDbvgoDFcVY', 'catName' => 'Beauty & Health']) }}">
-                        <img src="{{ asset('public/customer/img/category/beauty.jpg') }}" alt="Category 1" class="rounded-circle">
+                        <img src="{{ asset('public/customer/img/category/beauty.jpg') }}" alt="Category 1" class="rounded-circle img-responsive smaller-image">
                         <p class="text-center mt-3 font-weight-bold h5">Beauty & Health</p>
                     </a>
                 </div>
@@ -156,7 +156,7 @@
             <div class="col-md-2 col-sm-12">
                 <div class="category-1">
                     <a href="{{ route('cat-products', ['catId' => 'BpvWbAPOIcqo', 'catName' => 'Clothing, Shoes & Jewelry']) }}">
-                        <img src="{{ asset('public/customer/img/category/clothing.jpg') }}" alt="Category 2" class="rounded-circle">
+                        <img src="{{ asset('public/customer/img/category/clothing.jpg') }}" alt="Category 2" class="rounded-circle img-responsive smaller-image">
                         <p class="text-center mt-3 font-weight-bold h5">Clothing & Jewelry</p>
                     </a>
                 </div>
@@ -164,7 +164,7 @@
             <div class="col-md-2 col-sm-12">
                 <div class="category-1">
                     <a href="{{ route('cat-products', ['catId' => 'rRvPbBYtMJDn', 'catName' => 'Toys, Kids & Baby']) }}">
-                        <img src="{{ asset('public/customer/img/category/toys.jpg') }}" alt="Category 3" class="rounded-circle">
+                        <img src="{{ asset('public/customer/img/category/toys.jpg') }}" alt="Category 3" class="rounded-circle img-responsive smaller-image">
                         <p class="text-center mt-3 font-weight-bold h5">Kids</p>
                     </a>
                 </div>
@@ -172,7 +172,7 @@
             <div class="col-md-2 col-sm-12">
                 <div class="category-1">
                     <a href="{{ route('cat-products', ['catId' => 'rKvSDFctCoVA', 'catName' => 'Electronics']) }}">
-                        <img src="{{ asset('public/customer/img/category/electronics.jpg') }}" alt="Category 4" class="rounded-circle">
+                        <img src="{{ asset('public/customer/img/category/electronics.jpg') }}" alt="Category 4" class="rounded-circle img-responsive smaller-image">
                         <p class="text-center mt-3 font-weight-bold h5">Electronics</p>
                     </a>
                 </div>
@@ -180,7 +180,7 @@
             <div class="col-md-2 col-sm-12">
                 <div class="category-1">
                     <a href="{{ route('cat-products', ['catId' => 'BovRVPJymYDO', 'catName' => 'Home, Garden & Tools']) }}">
-                        <img src="{{ asset('public/customer/img/category/home.jpg') }}" alt="Category 4" class="rounded-circle">
+                        <img src="{{ asset('public/customer/img/category/home.jpg') }}" alt="Category 4" class="rounded-circle img-responsive smaller-image">
                         <p class="text-center mt-3 font-weight-bold h5">Home & Garden</p>
                     </a>
                 </div>
@@ -369,10 +369,12 @@
                 </div>
             </div>
             <div class="col-lg-3 offset-lg-1">
-                <div class="product-large set-bg m-large" data-setbg="{{ asset('public/customer/img/products/man-large.jpg') }}">
-                    <h2>Men’s</h2>
-                    <a href="{{ route('shop-page') }}">Discover More</a>
-                </div>
+                <a href="{{ route('cat-products', ['catId' => 'grVyDtYRvJbB', 'catName' => 'Men']) }}">
+                    <div class="product-large set-bg" data-setbg="{{ asset('public/customer/img/products/man-large.jpg') }}">
+                        <h2>Men’s</h2>
+                        <h6 class="mt-3 text-white"><u>Discover More</u></h6>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -424,10 +426,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3">
-                <div class="product-large set-bg" data-setbg="{{ asset('public/customer/img/products/women-large.jpg') }}">
-                    <h2>Women’s</h2>
-                    <a href="{{ route('shop-page') }}">Discover More</a>
-                </div>
+                <a href="{{ route('cat-products', ['catId' => 'rnvgbAYilcDw', 'catName' => 'Women']) }}">
+                    <div class="product-large set-bg" data-setbg="{{ asset('public/customer/img/products/women-large.jpg') }}">
+                        <h2>Women’s</h2>
+                        <h6 class="mt-3 text-white"><u>Discover More</u></h6>
+                    </div>
+                </a>
             </div>
             <div class="col-lg-8 offset-lg-1">
                 <div class="filter-control">
@@ -557,43 +561,60 @@
 <!-- Product Shop Section End -->
 
 <!-- Instagram Section Begin -->
+<div class="col-lg-12">
+    <div class="section-title mb-3 mt-3">
+        <h2>Top Picks</h2>
+    </div>
+</div>
 <div class="instagram-photo">
-    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/insta-1.jpg') }}">
+    <a href="{{ route('cat-products', ['catId' => 'ZNbpvVJUQcqn', 'catName' => 'Outdoor']) }}">
+    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/category/outdoor.jpg') }}">
         <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">Nature Checkout Collection</a></h5>
+            <i class="ti-shopping-cart"></i>
+            <h5>Outdoor</h5>
         </div>
     </div>
-    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/insta-2.jpg') }}">
+    </a>
+    <a href="{{ route('cat-products', ['catId' => 'WAbcVOJQoYDN', 'catName' => 'Pet Supplies']) }}">
+    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/category/pets.jpg') }}">
         <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">Nature Checkout Collection</a></h5>
+            <i class="ti-shopping-cart"></i>
+            <h5>Pets</h5>
         </div>
     </div>
-    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/insta-3.jpg') }}">
+    </a>
+    <a href="{{ route('cat-products', ['catId' => 'WYvhDeJtFcbg', 'catName' => 'Electronics Accessories']) }}">
+    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/category/electronics1.jpg') }}">
         <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">Nature Checkout Collection</a></h5>
+            <i class="ti-shopping-cart"></i>
+            <h5>Electronics</h5>
         </div>
     </div>
-    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/insta-4.jpg') }}">
+    </a>
+    <a href="{{ route('cat-products', ['catId' => 'fVvMDFcEoYba', 'catName' => 'Automotive']) }}">
+    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/category/automotive.jpg') }}">
         <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">Nature Checkout Collection</a></h5>
+            <i class="ti-shopping-cart"></i>
+            <h5>Automotive</h5>
         </div>
     </div>
-    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/insta-5.jpg') }}">
+    </a>
+    <a href="{{ route('cat-products', ['catId' => 'kNqPvIojdYVD', 'catName' => 'Industrial']) }}">
+    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/category/industrial.jpg') }}">
         <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">Nature Checkout Collection</a></h5>
+            <i class="ti-shopping-cart"></i>
+            <h5>Industrial</h5>
         </div>
     </div>
-    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/insta-6.jpg') }}">
+    </a>
+    <a href="{{ route('cat-products', ['catId' => 'WrDgVAYWlobc', 'catName' => 'Fashion Accessories']) }}">
+    <div class="insta-item set-bg" data-setbg="{{ asset('public/customer/img/category/clothing1.jpg') }}">
         <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">Nature Checkout Collection</a></h5>
+            <i class="ti-shopping-cart"></i>
+            <h5>Fashion</h5>
         </div>
     </div>
+    </a>
 </div>
 <!-- Instagram Section End -->
 
@@ -687,7 +708,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="faq-accordin">
                     <div class="accordion" id="accordionExample">
                         <div class="card">
@@ -754,6 +775,9 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <img src="{{ asset('public/customer/img/faq.jpg') }}" alt="" style="border-radius: 20px" class="faq-img img-responsive img-fluid">
+            </div>
         </div>
     </div>
 </div>
@@ -794,12 +818,69 @@
 </div>
 <!-- Partner Logo Section End -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary d-none" id="modalTrigger" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+  </button>
+
+ <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Welcome to Nature Checkout!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ asset('public/customer/img/logo/logo3.png') }}" alt="Image" class="img-fluid" style="width: 25%">
+                <p class="mt-3">Welcome to our shopping paradise! We are thrilled to have you here and are excited to showcase our vast collection of products designed to cater to your needs and desires.</p>
+                <p>Take your time to explore our website, discover new arrivals, and take advantage of our exclusive deals and promotions. We are confident that you'll find something special that speaks to you.</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 
 
 @section('scripts')
 
 
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+<script>
+    $(document).ready(function() {
+        // if (localStorage.getItem('modalShown3')) {
+
+            $('#modalTrigger').click();
+
+        //     localStorage.setItem('modalShown3', true);
+        // }
+    });
+</script>
 
 
 

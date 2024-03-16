@@ -111,3 +111,19 @@
     background-color: #7D9B3C;
     border-color: #7D9B3C;
 }
+
+.smaller-image {
+    width: 225px; /* Adjust the width as needed */
+    height: 250px; /* Adjust the height as needed */
+}
+
+@media (max-width: 767px) {
+    .smaller-image {
+        max-width: 250px; /* Adjust the maximum width as needed */
+        display: block;
+        margin: 0 auto; /* Center align the image */
+    }
+    .faq-img{
+        display: none;
+    }
+}
