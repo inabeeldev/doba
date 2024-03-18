@@ -281,17 +281,83 @@ class ShopController extends Controller
                 // Take the first 8 elements as random related products
                 $randomRelatedProducts = array_slice($relatedProductsData, 0, 8);
             }
+            $randomReviews = $this->getRandomReviews();
             // dd($productData);
             // Pass the product data and random related products to the view
             return view('shop.product_detail', [
                 'productData' => $productData,
                 'randomRelatedProducts' => $randomRelatedProducts ?? [],
+                'randomReviews' => $randomReviews,
             ]);
         } else {
             // Handle unsuccessful response
             $statusCode = $productResponse->status();
             return response()->json(['error' => 'Unable to fetch product detail'], $statusCode);
         }
+    }
+
+
+    private function getRandomReviews()
+    {
+        // Static review data
+        $staticReviews = [
+            [
+                'name' => 'Brandon Kelley',
+                'date' => '12 Mar 2024',
+                'rating' => 4,
+                'comment' => 'Nice Product!'
+            ],
+            [
+                'name' => 'Roy Banks',
+                'date' => '27 Feb 2024',
+                'rating' => 4,
+                'comment' => 'Nice and exellent!'
+            ],
+
+            [
+                'name' => 'Jason muller',
+                'date' => '25 Jan 2024',
+                'rating' => 5,
+                'comment' => 'This is a good product!'
+            ],
+
+            [
+                'name' => 'mike jason',
+                'date' => '05 Mar 2024',
+                'rating' => 5,
+                'comment' => 'I really liked this product!'
+            ],
+
+            [
+                'name' => 'Larnyoh mike',
+                'date' => '09 Feb 2024',
+                'rating' => 4,
+                'comment' => 'Amazing Product!'
+            ],
+
+            [
+                'name' => 'Joseph john',
+                'date' => '19 Feb 2024',
+                'rating' => 5,
+                'comment' => 'Thank you for this wonderful piece of product!'
+            ],
+
+            [
+                'name' => 'Sheila Roy',
+                'date' => '12 Mar 2024',
+                'rating' => 4,
+                'comment' => 'Fast delivery and amazing item!'
+            ],
+            // Add more static reviews if needed
+        ];
+
+        // Shuffle the array to get a random order
+        shuffle($staticReviews);
+
+        // Take only the first 2 reviews
+        $randomReviews = array_slice($staticReviews, 0, 2);
+
+        return $randomReviews;
     }
 
 

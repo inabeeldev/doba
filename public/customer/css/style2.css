@@ -126,4 +126,7 @@
     .faq-img{
         display: none;
     }
+    .header-top .ht-right .top-social {
+        padding-right: 95px;
+    }
 }
