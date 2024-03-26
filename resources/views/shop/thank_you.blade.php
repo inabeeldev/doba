@@ -26,7 +26,7 @@
             <div class="col-lg-12 order-1 order-lg-2">
                 <div class="product-list">
                     <div class="row">
-                        @foreach ($products['goodsList'] as $p)
+                        @foreach ($products as $p)
 
                         <div class="col-lg-4 col-sm-6">
                             <div class="product-item">
@@ -39,9 +39,7 @@
                                         <i class="icon_heart_alt"></i>
                                     </div>
                                     <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        <li class="w-icon active"><a href="{{ route('product-detail', $p['spuId']) }}">+ Add To Cart <i class="icon_bag_alt"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="pi-text">

@@ -77,8 +77,8 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
-              <span class="app-brand-logo demo">
-                <svg
+              {{-- <span class="app-brand-logo demo"> --}}
+                {{-- <svg
                   width="25"
                   viewBox="0 0 25 42"
                   version="1.1"
@@ -130,8 +130,9 @@
                       </g>
                     </g>
                   </g>
-                </svg>
-              </span>
+                </svg> --}}
+                <img src="{{ asset('public/customer/img/logo/logo3.png') }}" alt="Nature Checkout" style="max-width:13%">
+            {{-- </span> --}}
               <span class="app-brand-text demo menu-text fw-bolder ms-2">NatureCheckout</span>
             </a>
 
@@ -173,6 +174,13 @@
                 </ul>
             </li>
 
+            <li class="menu-item {{ request()->is('admin/business-settings') ? 'active' : '' }}">
+                <a href="{{ route('business-settings') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Analytics">Tax</div>
+                </a>
+            </li>
+
 
         </ul>
         </aside>
@@ -207,7 +215,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="{{ asset('public/admin/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="{{ asset('public/admin/img/avatars/10.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -216,7 +224,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="{{ asset('public/admin/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="{{ asset('public/admin/img/avatars/10.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -311,6 +319,8 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 
     <!-- Include DataTables JS -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>

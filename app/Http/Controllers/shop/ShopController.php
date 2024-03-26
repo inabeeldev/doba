@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Utils\RsaUtil;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Models\BusinessSetting;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\View;
@@ -120,7 +121,7 @@ class ShopController extends Controller
         $catIds = ['BovRVPJymYDO', 'rEqHbnYtsPDQ', 'rsVMvcojyPbw','riqKbocWNJDZ','AnDbvgoDFcVY','AcvdbgJfYPVN','ZjbtDvoRFcVl','TzVHDqcQaPbO','BpvWbAPOIcqo','BIDHVAPidJbn','AMqQVfPBoYDH','ApDjvTYfcJVh']; // Add more category IDs as needed
         shuffle($catIds); // Shuffle the array of category IDs
         $selectedCatId = array_pop($catIds); // Select one ID at a time from the shuffled array
-        $pageSize = 24; // Number of products per page
+        $pageSize = 32; // Number of products per page
         $page = $request->query('page', 1);
         $products_url = "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=$page&pageSize=$pageSize&shipFrom=US&shipTo=US";
 
@@ -128,12 +129,15 @@ class ShopController extends Controller
         if ($productResponse->successful()) {
             $responseData = $productResponse->json();
 
-            $products = $responseData['businessData']['data'];
+            $products = $responseData['businessData']['data']['goodsList'];
             $totalProducts = $responseData['businessData']['data']['totalQuantity'];
 
+            $products = array_filter($products, function ($product) {
+                return $product['inventory'] > 0;
+            });
                 // Calculate total pages
             $totalPages = ceil($totalProducts / $pageSize);
-
+            // dd($products);
             return view('shop.shop_page', [
                 'productData' => [
                     'currentPage' => $page,
@@ -157,7 +161,7 @@ class ShopController extends Controller
         $catIds = ['ACDebtYQyoqZ', 'ruqPDMoqcYVS', 'WAbcVOJQoYDN','gdVvqkPtEJbK','rKvSDFctCoVA','rvVgDeoYKPbZ','AzVrqFYQeovL','TzVHDqcQaPbO','geVDqCYMrobh','gzVZDkPcfcqd','AMqQVfPBoYDH','ApDjvTYfcJVh']; // Add more category IDs as needed
         shuffle($catIds); // Shuffle the array of category IDs
         $selectedCatId = array_pop($catIds); // Select one ID at a time from the shuffled array
-        $pageSize = 24; // Number of products per page
+        $pageSize = 32; // Number of products per page
         $page = $request->query('page', 1);
         $products_url = "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=$page&pageSize=$pageSize&shipFrom=US&shipTo=US";
 
@@ -165,9 +169,13 @@ class ShopController extends Controller
         if ($productResponse->successful()) {
             $responseData = $productResponse->json();
 
-            $products = $responseData['businessData']['data'];
+            $products = $responseData['businessData']['data']['goodsList'];
             $totalProducts = $responseData['businessData']['data']['totalQuantity'];
 
+
+            $products = array_filter($products, function ($product) {
+                return $product['inventory'] > 0;
+            });
                 // Calculate total pages
             $totalPages = ceil($totalProducts / $pageSize);
 
@@ -189,23 +197,26 @@ class ShopController extends Controller
     }
 
 
-
-
     public function autocomplete(Request $request)
     {
-        $query = $request->term;
+        $query = $request->input('term');
 
-
-        $products_url = "https://openapi.doba.com/api/goods/doba/spu/list?keyword=$query&pageSize=40&shipFrom=US&shipTo=US";
+        $products_url = "https://openapi.doba.com/api/goods/doba/spu/list?keyword=$query&pageSize=8&shipFrom=US&shipTo=US";
 
         $response = Http::withHeaders($this->headers)->get($products_url);
 
         $productResponse = json_decode($response->getBody(), true);
         $productData = $productResponse['businessData']['data']['goodsList'];
 
-        $titles = collect($productData)->pluck('title');
+        $suggestions = [];
+        foreach ($productData as $product) {
+            $suggestions[] = [
+                'title' => $product['title'],
+                'image' => $product['pictureUrl'], // Assuming 'mainImage' contains the URL of the main product image
+            ];
+        }
 
-        return $titles;
+        return response()->json($suggestions);
     }
 
 
@@ -213,7 +224,7 @@ class ShopController extends Controller
     {
 
 
-        $pageSize = 9; // Number of products per page
+        $pageSize = 32; // Number of products per page
         $page = $request->query('page', 1);
         $query = $request->input('query');
         $products_url = "https://openapi.doba.com/api/goods/doba/spu/list?keyword=$query&pageNumber=$page&pageSize=$pageSize&shipFrom=US&shipTo=US";
@@ -222,9 +233,13 @@ class ShopController extends Controller
         if ($productResponse->successful()) {
             $responseData = $productResponse->json();
 
-            $products = $responseData['businessData']['data'];
+            $products = $responseData['businessData']['data']['goodsList'];
             $totalProducts = $responseData['businessData']['data']['totalQuantity'];
 
+
+            $products = array_filter($products, function ($product) {
+                return $product['inventory'] > 0;
+            });
                 // Calculate total pages
             $totalPages = ceil($totalProducts / $pageSize);
 
@@ -250,15 +265,7 @@ class ShopController extends Controller
 
     public function productDetail($spuId)
     {
-        // while (empty($this->categoryData)) {
-        //     return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        // }
-        // while (empty($this->categoryData)) {
-        //     usleep(900000); // Sleep for 0.5 seconds
-        // }
 
-
-        // session()->flush();
         $product_url = "https://openapi.doba.com/api/goods/doba/spu/detail?spuId=$spuId";
 
         $productResponse = Http::withHeaders($this->headers)->get($product_url);
@@ -274,12 +281,18 @@ class ShopController extends Controller
             // dd($productData);
             if ($relatedProductResponse->successful()) {
                 $relatedProductsData = $relatedProductResponse->json()['businessData']['data']['goodsList'];
+
+
+                $relatedProductsData = array_filter($relatedProductsData, function ($product) {
+                    return $product['inventory'] > 0;
+                });
                 // dd($relatedProductsData);
                 // Shuffle the array to get a random order
                 shuffle($relatedProductsData);
 
                 // Take the first 8 elements as random related products
-                $randomRelatedProducts = array_slice($relatedProductsData, 0, 8);
+                $randomRelatedProducts = array_slice($relatedProductsData, 0, 16);
+                // dd($randomRelatedProducts);
             }
             $randomReviews = $this->getRandomReviews();
             // dd($productData);
@@ -304,13 +317,13 @@ class ShopController extends Controller
             [
                 'name' => 'Brandon Kelley',
                 'date' => '12 Mar 2024',
-                'rating' => 4,
+                'rating' => 5,
                 'comment' => 'Nice Product!'
             ],
             [
                 'name' => 'Roy Banks',
                 'date' => '27 Feb 2024',
-                'rating' => 4,
+                'rating' => 5,
                 'comment' => 'Nice and exellent!'
             ],
 
@@ -318,20 +331,20 @@ class ShopController extends Controller
                 'name' => 'Jason muller',
                 'date' => '25 Jan 2024',
                 'rating' => 5,
-                'comment' => 'This is a good product!'
+                'comment' => 'This is a good product.'
             ],
 
             [
                 'name' => 'mike jason',
                 'date' => '05 Mar 2024',
                 'rating' => 5,
-                'comment' => 'I really liked this product!'
+                'comment' => 'I really liked this product.'
             ],
 
             [
                 'name' => 'Larnyoh mike',
                 'date' => '09 Feb 2024',
-                'rating' => 4,
+                'rating' => 5,
                 'comment' => 'Amazing Product!'
             ],
 
@@ -339,14 +352,21 @@ class ShopController extends Controller
                 'name' => 'Joseph john',
                 'date' => '19 Feb 2024',
                 'rating' => 5,
-                'comment' => 'Thank you for this wonderful piece of product!'
+                'comment' => 'Thank you for this wonderful piece of product.'
             ],
 
             [
                 'name' => 'Sheila Roy',
                 'date' => '12 Mar 2024',
-                'rating' => 4,
+                'rating' => 5,
                 'comment' => 'Fast delivery and amazing item!'
+            ],
+
+            [
+                'name' => 'Taylor bell',
+                'date' => '08 Mar 2024',
+                'rating' => 5,
+                'comment' => 'I love this product and Naturecheckout service.'
             ],
             // Add more static reviews if needed
         ];
@@ -365,8 +385,7 @@ class ShopController extends Controller
     public function catProduct(Request $request, $catId, $catName)
     {
 
-        // dd($page);
-        $pageSize = 9; // Number of products per page
+        $pageSize = 32; // Number of products per page
         $page = $request->query('page', 1);
 
         $offset = ($page - 1) * $pageSize;
@@ -380,8 +399,12 @@ class ShopController extends Controller
             $responseData = $response->json();
 
             if ($responseData['responseCode'] === '000000' && $responseData['businessData']['successful']) {
-                $products = $responseData['businessData']['data'];
+                $products = $responseData['businessData']['data']['goodsList'];
                 $totalProducts = $responseData['businessData']['data']['totalQuantity'];
+
+                $products = array_filter($products, function ($product) {
+                    return $product['inventory'] > 0;
+                });
 
                 // Calculate total pages
                 $totalPages = ceil($totalProducts / $pageSize);
@@ -405,52 +428,59 @@ class ShopController extends Controller
 
 
     public function addToCart(Request $request)
-{
-    $requestData = [
-        "shipToCountry" => 'US',
-        'goods' => [
-            [
-                "itemNo" => $request->input('itemNo'),
-                "quantity" => $request->input('quantity')
-            ]
+    {
+        $tax = BusinessSetting::where('key', 'tax')->first()->value;
 
-        ],
-    ];
+        $requestData = [
+            "shipToCountry" => 'US',
+            'goods' => [
+                [
+                    "itemNo" => $request->input('itemNo'),
+                    "quantity" => $request->input('quantity')
+                ]
 
-
-    $ship_url = 'https://openapi.doba.com/api/shipping/doba/cost/goods';
-
-    $response = Http::withHeaders($this->headers) // Assuming $this->headers contains required headers
-    ->post($ship_url, $requestData);
-
-    $shipResponseData = $response->json(); // Convert response to JSON format
-    // dd($shipResponseData);
-
-    $shippingMethodId =  $shipResponseData['businessData'][0]['data']['costs'][0]['shippingMethodId'];
+            ],
+        ];
 
 
-    $itemNo = $request->input('itemNo');
-    $quantity = $request->input('quantity');
-    // $shippingMethodId = $request->input('shippingMethodId');
-    $shippingMethodId = $shippingMethodId;
-    $spuId = $request->input('spuId');
-    $title = $request->input('title');
-    $price = $request->input('price');
-    $skuPicList = $request->input('skuPicList');
+        $ship_url = 'https://openapi.doba.com/api/shipping/doba/cost/goods';
 
-    // Store data in session
-    $request->session()->push('cart', [
-        'itemNo' => $itemNo,
-        'quantity' => $quantity,
-        'shippingMethodId' => $shippingMethodId,
-        'spuId' => $spuId,
-        'title' => $title,
-        'price' => $price,
-        'skuPicList' => $skuPicList
-    ]);
+        $response = Http::withHeaders($this->headers) // Assuming $this->headers contains required headers
+        ->post($ship_url, $requestData);
 
-    return response()->json(['message' => 'Item added to cart successfully.'], 200);
-}
+        $shipResponseData = $response->json(); // Convert response to JSON format
+        // dd($shipResponseData);
+
+        // Extract shipping method ID and shipping fee
+        $shippingMethodId =  $shipResponseData['businessData'][0]['data']['costs'][0]['shippingMethodId'];
+        $shipFee = $shipResponseData['businessData'][0]['data']['costs'][0]['shipFee'];
+
+        $itemNo = $request->input('itemNo');
+        $quantity = $request->input('quantity');
+        // $shippingMethodId = $request->input('shippingMethodId'); // Removed redundant line
+        $shippingMethodId = $shippingMethodId;
+        $spuId = $request->input('spuId');
+        $title = $request->input('title');
+        $price = $request->input('price');
+        $skuPicList = $request->input('skuPicList');
+
+        $taxAmount = ($price * $quantity) * ($tax / 100);
+
+        // Store data in session, including shipFee
+        $request->session()->push('cart', [
+            'itemNo' => $itemNo,
+            'quantity' => $quantity,
+            'shippingMethodId' => $shippingMethodId,
+            'shipFee' => $shipFee, // Include shipFee in the cart data
+            'spuId' => $spuId,
+            'title' => $title,
+            'price' => $price,
+            'tax' => $taxAmount,
+            'skuPicList' => $skuPicList
+        ]);
+
+        return response()->json(['message' => 'Item added to cart successfully.'], 200);
+    }
 
     public function cart()
     {
@@ -471,49 +501,49 @@ class ShopController extends Controller
     }
 
 
-public function updateCartItem(Request $request)
-{
+    public function updateCartItem(Request $request)
+    {
 
-    $itemNo = $request->input('itemNo');
-    $quantity = $request->input('quantity');
+        $itemNo = $request->input('itemNo');
+        $quantity = $request->input('quantity');
 
-    // Get the current cart items from the session
-    $cart = Session::get('cart', []);
+        // Get the current cart items from the session
+        $cart = Session::get('cart', []);
 
-    // Find the item in the cart
-    foreach ($cart as &$item) {
-        if ($item['itemNo'] == $itemNo) {
-            // Update the quantity
-            $item['quantity'] = $quantity;
-            break;
+        // Find the item in the cart
+        foreach ($cart as &$item) {
+            if ($item['itemNo'] == $itemNo) {
+                // Update the quantity
+                $item['quantity'] = $quantity;
+                break;
+            }
         }
+
+        // Save the updated cart back to the session
+        Session::put('cart', $cart);
+
+        return response()->json(['message' => 'Cart item updated successfully.']);
     }
 
-    // Save the updated cart back to the session
-    Session::put('cart', $cart);
-
-    return response()->json(['message' => 'Cart item updated successfully.']);
-}
-
-public function removeCartItem(Request $request)
-{
+    public function removeCartItem(Request $request)
+    {
 
 
-    $itemNo = $request->input('itemNo');
+        $itemNo = $request->input('itemNo');
 
-    // Get the current cart items from the session
-    $cart = Session::get('cart', []);
+        // Get the current cart items from the session
+        $cart = Session::get('cart', []);
 
-    // Remove the item from the cart
-    $cart = array_filter($cart, function ($item) use ($itemNo) {
-        return $item['itemNo'] != $itemNo;
-    });
+        // Remove the item from the cart
+        $cart = array_filter($cart, function ($item) use ($itemNo) {
+            return $item['itemNo'] != $itemNo;
+        });
 
-    // Save the updated cart back to the session
-    Session::put('cart', $cart);
+        // Save the updated cart back to the session
+        Session::put('cart', $cart);
 
-    return response()->json(['message' => 'Cart item removed successfully.']);
-}
+        return response()->json(['message' => 'Cart item removed successfully.']);
+    }
 
 
     public function checkoutPage()
@@ -523,339 +553,115 @@ public function removeCartItem(Request $request)
     }
 
 
-// public function checkoutStore(Request $request)
-// {
+    public function checkoutStore(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'billingAddress.name' => 'required',
+                'email' => 'required|email',
+                'billingAddress.telephone' => 'required',
+                'billingAddress.countryCode' => 'required',
+                'billingAddress.provinceCode' => 'required',
+                'billingAddress.city' => 'required',
+                'billingAddress.zip' => 'required',
+                'billingAddress.addr1' => 'required',
+                'stripeToken' => 'required', // Ensure the stripeToken field is required
+            ]);
 
-//     $billingAddress = $request->input('billingAddress');
-//     $requestData = [
-//         "shipToCountry" => $billingAddress['countryCode'],
-//         "shipToProvince" => $billingAddress['provinceCode'],
-//         "shipToCity" => $billingAddress['city'],
-//         "shipToZipCode" => $billingAddress['zip'],
-//         'goods' => [],
-//     ];
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
 
-//     $cartItems = session('cart', []);
-//     foreach ($cartItems as $cartItem) {
-//         $requestData['goods'][] = [
-//             "itemNo" => $cartItem['itemNo'],
-//             "quantity" => $cartItem['quantity']
-//         ];
-//     }
+            Stripe::setApiKey(config('services.stripe.secret'));
 
+            $charge = Charge::create([
+                'amount' => $request->input('storeOrderAmount') * 100, // Amount in cents
+                'currency' => 'usd',
+                'description' => 'Example charge',
+                'source' => $request->stripeToken,
+            ]);
 
-//     $ship_url = 'https://openapi.doba.com/api/shipping/doba/cost/goods';
+            if ($charge->status === 'succeeded') {
+                // Stripe charge successful, proceed with the post API call
+                $url = 'https://openapi.doba.com/api/order/doba/importOrder';
+                $billingAddress = $request->input('billingAddress');
+                $cartItems = session('cart', []);
+                $payload = [
+                    'billingAddress' => $billingAddress,
+                    'openApiImportDSOrderList' => [],
+                ];
+                $uniqueOrders = [];
 
-//     $response = Http::withHeaders($this->headers) // Assuming $this->headers contains required headers
-//     ->post($ship_url, $requestData);
+                foreach ($cartItems as $cartItem) {
+                    $orderKey = md5(json_encode($billingAddress));
 
-//     $shipResponseData = $response->json(); // Convert response to JSON format
-//     $shippingMethodIds = [];
-//     foreach ($shipResponseData['businessData'] as $businessDatum) {
-//         foreach ($businessDatum['data']['costs'] as $cost) {
-//             $shippingMethodIds[] = $cost['shippingMethodId'];
-//         }
-//     }
+                    if (!isset($uniqueOrders[$orderKey])) {
+                        $uniqueOrders[$orderKey] = [
+                            'goodsDetailDTOList' => [], // Initialize goodsDetailDTOList for this order
+                            'orderNumber' => date('ymdHis') . mt_rand(100, 999), // Generate a unique order number
+                            'shippingAddress' => $billingAddress, // Assume shipping address is the same as billing address
+                            'storeOrderAmount' => $request->input('storeOrderAmount'), // Total order amount
+                            'storeOrderBusiId' => 2135201,
+                        ];
+                    }
 
-//     // dd($shipResponseData);
-
-//     $url = 'https://openapi.doba.com/api/order/doba/importOrder';
-
-//     $billingAddress = $request->input('billingAddress');
-//     $cartItems = session('cart', []);
-
-//     $payload = [
-//         'billingAddress' => $billingAddress,
-//         'openApiImportDSOrderList' => [],
-//     ];
-
-//     $uniqueOrders = [];
-
-//     foreach ($cartItems as $cartItem) {
-//         $orderKey = md5(json_encode($billingAddress));
-
-//         if (!isset($uniqueOrders[$orderKey])) {
-//             $uniqueOrders[$orderKey] = [
-//                 'goodsDetailDTOList' => [], // Initialize goodsDetailDTOList for this order
-//                 'orderNumber' => date('ymdHis') . mt_rand(100, 999), // Generate a unique order number
-//                 'shippingAddress' => $billingAddress, // Assume shipping address is the same as billing address
-//                 'storeOrderAmount' => $request->input('storeOrderAmount'), // Total order amount
-//                 'storeOrderBusiId' => 2135201,
-//             ];
-//         }
-
-//         // Use the first shipping method ID from the list
-//         $uniqueOrders[$orderKey]['goodsDetailDTOList'][] = [
-//             'itemNo' => $cartItem['itemNo'],
-//             'quantityOrdered' => $cartItem['quantity'],
-//             'shippingMethodId' => isset($shippingMethodIds[0]) ? $shippingMethodIds[0] : null,
-//         ];
-//     }
-
-//     foreach ($uniqueOrders as $order) {
-//         $payload['openApiImportDSOrderList'][] = $order;
-//     }
-//     // dd($payload);
-
-//     $response = Http::withHeaders($this->headers) // Assuming $this->headers contains required headers
-//                     ->post($url, $payload);
-//     // dd($response);
-//     if ($response->successful()) {
-//         $responseData = $response->json(); // Convert response to JSON format
-
-
-//          dd($responseData);
-
-//         if ($responseData['businessData']['data']['orderSuccessResList']) {
-//             foreach ($uniqueOrders as $order) {
-//                 Order::create([
-//                     'orderNumber' => $responseData['businessData']['data']['orderSuccessResList'][0]['orderNumber'],
-//                     'ordBatchId' => $responseData['businessData']['data']['orderSuccessResList'][0]['ordBatchId'], // Adjust this logic as needed
-//                     'name' => $order['shippingAddress']['name'],
-//                     'email' => 'ahah@example.com',
-//                     'telephone' => $order['shippingAddress']['telephone'],
-//                     'countryCode' => $order['shippingAddress']['countryCode'],
-//                     'provinceCode' => $order['shippingAddress']['provinceCode'],
-//                     'city' => $order['shippingAddress']['city'],
-//                     'zip' => $order['shippingAddress']['zip'],
-//                     'addr1' => $order['shippingAddress']['addr1'],
-//                     'addr2' => $order['shippingAddress']['addr2'],
-//                     'phoneExtension' => $order['shippingAddress']['phoneExtension'],
-//                     'payment_status' => 'unpaid', // Assuming the initial status is unpaid
-//                 ]);
-//             }
-
-//             return redirect()->route('thank-you-page');
-//         }
-
-
-//     } else {
-//         // Request failed, handle the error
-//         $errorCode = $response->status(); // Get the HTTP status code
-//         $errorMessage = $response->body(); // Get the error message
-
-//         dd($errorCode);
-//     }
-// }
-
-
-
-
-// public function checkoutStore(Request $request)
-// {
-
-//     $validator = Validator::make($request->all(), [
-//         'name' => 'required',
-//         'email' => 'required|email',
-//         'telephone' => 'required',
-//         'countryCode' => 'required',
-//         'provinceCode' => 'required',
-//         'city' => 'required',
-//         'zip' => 'required',
-//         'addr1' => 'required',
-//         'stripeToken' => 'required', // Ensure the stripeToken field is required
-//     ]);
-
-//     if ($validator->fails()) {
-//         return redirect()->back()
-//             ->withErrors($validator)
-//             ->withInput();
-//     }
-
-//     $url = 'https://openapi.doba.com/api/order/doba/importOrder';
-
-//     $billingAddress = $request->input('billingAddress');
-//     $cartItems = session('cart', []);
-
-//     $payload = [
-//         'billingAddress' => $billingAddress,
-//         'openApiImportDSOrderList' => [],
-//     ];
-
-//     $uniqueOrders = [];
-
-//     foreach ($cartItems as $cartItem) {
-//         $orderKey = md5(json_encode($billingAddress));
-
-//         if (!isset($uniqueOrders[$orderKey])) {
-//             $uniqueOrders[$orderKey] = [
-//                 'goodsDetailDTOList' => [], // Initialize goodsDetailDTOList for this order
-//                 'orderNumber' => date('ymdHis') . mt_rand(100, 999), // Generate a unique order number
-//                 'shippingAddress' => $billingAddress, // Assume shipping address is the same as billing address
-//                 'storeOrderAmount' => $request->input('storeOrderAmount'), // Total order amount
-//                 'storeOrderBusiId' => 2135201,
-//             ];
-//         }
-
-//         // Use the first shipping method ID from the list
-//         $uniqueOrders[$orderKey]['goodsDetailDTOList'][] = [
-//             'itemNo' => $cartItem['itemNo'],
-//             'quantityOrdered' => $cartItem['quantity'],
-//             'shippingMethodId' => $cartItem['shippingMethodId'],
-//         ];
-//     }
-
-//     foreach ($uniqueOrders as $order) {
-//         $payload['openApiImportDSOrderList'][] = $order;
-//     }
-
-//     Stripe::setApiKey(config('services.stripe.secret'));
-
-//     $charge = Charge::create([
-//         'amount' => $request->input('storeOrderAmount') * 100, // Amount in cents
-//         'currency' => 'usd',
-//         'description' => 'Example charge',
-//         'source' => $request->stripeToken,
-//     ]);
-
-
-//     $response = Http::withHeaders($this->headers) // Assuming $this->headers contains required headers
-//                     ->post($url, $payload);
-
-//     if ($response->successful()) {
-//         $responseData = $response->json(); // Convert response to JSON format
-
-//         if ($responseData['businessData']['data']['orderSuccessResList']) {
-//             foreach ($uniqueOrders as $order) {
-//                 Order::create([
-//                     'orderNumber' => $responseData['businessData']['data']['orderSuccessResList'][0]['orderNumber'],
-//                     'ordBatchId' => $responseData['businessData']['data']['orderSuccessResList'][0]['ordBatchId'], // Adjust this logic as needed
-//                     'name' => $order['shippingAddress']['name'],
-//                     'email' => $request->email,
-//                     'telephone' => $order['shippingAddress']['telephone'],
-//                     'countryCode' => $order['shippingAddress']['countryCode'],
-//                     'provinceCode' => $order['shippingAddress']['provinceCode'],
-//                     'city' => $order['shippingAddress']['city'],
-//                     'zip' => $order['shippingAddress']['zip'],
-//                     'addr1' => $order['shippingAddress']['addr1'],
-//                     'addr2' => $order['shippingAddress']['addr2'],
-//                     'phoneExtension' => $order['shippingAddress']['phoneExtension'],
-//                     'payment_status' => 'unpaid', // Assuming the initial status is unpaid
-//                 ]);
-//             }
-
-//             return redirect()->route('thank-you-page');
-//         }
-
-//     } else {
-//         $errorCode = $response->status(); // Get the HTTP status code
-//         $errorMessage = $response->body(); // Get the error message
-
-//         dd($errorCode);
-//     }
-// }
-
-
-
-public function checkoutStore(Request $request)
-{
-    try {
-        $validator = Validator::make($request->all(), [
-            'billingAddress.name' => 'required',
-            'email' => 'required|email',
-            'billingAddress.telephone' => 'required',
-            'billingAddress.countryCode' => 'required',
-            'billingAddress.provinceCode' => 'required',
-            'billingAddress.city' => 'required',
-            'billingAddress.zip' => 'required',
-            'billingAddress.addr1' => 'required',
-            'stripeToken' => 'required', // Ensure the stripeToken field is required
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        Stripe::setApiKey(config('services.stripe.secret'));
-
-        $charge = Charge::create([
-            'amount' => $request->input('storeOrderAmount') * 100, // Amount in cents
-            'currency' => 'usd',
-            'description' => 'Example charge',
-            'source' => $request->stripeToken,
-        ]);
-
-        if ($charge->status === 'succeeded') {
-            // Stripe charge successful, proceed with the post API call
-            $url = 'https://openapi.doba.com/api/order/doba/importOrder';
-            $billingAddress = $request->input('billingAddress');
-            $cartItems = session('cart', []);
-            $payload = [
-                'billingAddress' => $billingAddress,
-                'openApiImportDSOrderList' => [],
-            ];
-            $uniqueOrders = [];
-
-            foreach ($cartItems as $cartItem) {
-                $orderKey = md5(json_encode($billingAddress));
-
-                if (!isset($uniqueOrders[$orderKey])) {
-                    $uniqueOrders[$orderKey] = [
-                        'goodsDetailDTOList' => [], // Initialize goodsDetailDTOList for this order
-                        'orderNumber' => date('ymdHis') . mt_rand(100, 999), // Generate a unique order number
-                        'shippingAddress' => $billingAddress, // Assume shipping address is the same as billing address
-                        'storeOrderAmount' => $request->input('storeOrderAmount'), // Total order amount
-                        'storeOrderBusiId' => 2135201,
+                    // Use the first shipping method ID from the list
+                    $uniqueOrders[$orderKey]['goodsDetailDTOList'][] = [
+                        'itemNo' => $cartItem['itemNo'],
+                        'quantityOrdered' => $cartItem['quantity'],
+                        'shippingMethodId' => $cartItem['shippingMethodId'],
                     ];
                 }
 
-                // Use the first shipping method ID from the list
-                $uniqueOrders[$orderKey]['goodsDetailDTOList'][] = [
-                    'itemNo' => $cartItem['itemNo'],
-                    'quantityOrdered' => $cartItem['quantity'],
-                    'shippingMethodId' => $cartItem['shippingMethodId'],
-                ];
-            }
-
-            foreach ($uniqueOrders as $order) {
-                $payload['openApiImportDSOrderList'][] = $order;
-            }
-
-            $response = Http::withHeaders($this->headers) // Assuming $this->headers contains required headers
-                            ->post($url, $payload);
-
-            if ($response->successful()) {
-                $responseData = $response->json(); // Convert response to JSON format
-                // dd($responseData);
-                if ($responseData['businessData']['data']['orderSuccessResList']) {
-                    foreach ($uniqueOrders as $order) {
-                        Order::create([
-                            'orderNumber' => $responseData['businessData']['data']['orderSuccessResList'][0]['orderNumber'],
-                            'ordBatchId' => $responseData['businessData']['data']['orderSuccessResList'][0]['ordBatchId'], // Adjust this logic as needed
-                            'name' => $order['shippingAddress']['name'],
-                            'email' => $request->email,
-                            'telephone' => $order['shippingAddress']['telephone'],
-                            'countryCode' => $order['shippingAddress']['countryCode'],
-                            'provinceCode' => $order['shippingAddress']['provinceCode'],
-                            'city' => $order['shippingAddress']['city'],
-                            'zip' => $order['shippingAddress']['zip'],
-                            'addr1' => $order['shippingAddress']['addr1'],
-                            'addr2' => $order['shippingAddress']['addr2'],
-                            'phoneExtension' => $order['shippingAddress']['phoneExtension'],
-                            'payment_status' => 'paid', // Assuming the initial status is unpaid
-                        ]);
-                    }
-                    session()->forget('cart');
-                    return redirect()->route('thank-you-page');
+                foreach ($uniqueOrders as $order) {
+                    $payload['openApiImportDSOrderList'][] = $order;
                 }
 
-            } else {
-                $errorCode = $response->status(); // Get the HTTP status code
-                $errorMessage = $response->body(); // Get the error message
+                $response = Http::withHeaders($this->headers) // Assuming $this->headers contains required headers
+                                ->post($url, $payload);
 
-                dd($errorCode);
+                if ($response->successful()) {
+                    $responseData = $response->json(); // Convert response to JSON format
+                    // dd($responseData);
+                    if ($responseData['businessData']['data']['orderSuccessResList']) {
+                        foreach ($uniqueOrders as $order) {
+                            Order::create([
+                                'orderNumber' => $responseData['businessData']['data']['orderSuccessResList'][0]['orderNumber'],
+                                'ordBatchId' => $responseData['businessData']['data']['orderSuccessResList'][0]['ordBatchId'], // Adjust this logic as needed
+                                'name' => $order['shippingAddress']['name'],
+                                'email' => $request->email,
+                                'telephone' => $order['shippingAddress']['telephone'],
+                                'countryCode' => $order['shippingAddress']['countryCode'],
+                                'provinceCode' => $order['shippingAddress']['provinceCode'],
+                                'city' => $order['shippingAddress']['city'],
+                                'zip' => $order['shippingAddress']['zip'],
+                                'addr1' => $order['shippingAddress']['addr1'],
+                                'addr2' => $order['shippingAddress']['addr2'],
+                                'phoneExtension' => $order['shippingAddress']['phoneExtension'],
+                                'payment_status' => 'paid', // Assuming the initial status is unpaid
+                            ]);
+                        }
+                        session()->forget('cart');
+                        return redirect()->route('thank-you-page');
+                    }
+
+                } else {
+                    $errorCode = $response->status(); // Get the HTTP status code
+                    $errorMessage = $response->body(); // Get the error message
+
+                    dd($errorCode);
+                }
+            } else {
+                // Handle unsuccessful Stripe charge
+                return redirect()->back()->withErrors(['stripe_error' => 'Stripe charge failed.'])->withInput();
             }
-        } else {
-            // Handle unsuccessful Stripe charge
-            return redirect()->back()->withErrors(['stripe_error' => 'Stripe charge failed.'])->withInput();
+        } catch (Exception $e) {
+            // Handle any exceptions that occur during the process
+            dd($e->getMessage());
         }
-    } catch (Exception $e) {
-        // Handle any exceptions that occur during the process
-        dd($e->getMessage());
     }
-}
 
 
 
@@ -866,7 +672,7 @@ public function checkoutStore(Request $request)
         // return view('thank_you');
         // dd($page);
 
-        $url = 'https://openapi.doba.com/api/goods/doba/spu/list?pageNumber=1&pageSize=12&shipFrom=US&shipTo=US';
+        $url = 'https://openapi.doba.com/api/goods/doba/spu/list?pageNumber=1&pageSize=24&shipFrom=US&shipTo=US';
 
         $response = Http::withHeaders($this->headers)
                         ->get($url);
@@ -875,9 +681,11 @@ public function checkoutStore(Request $request)
             $responseData = $response->json();
 
             if ($responseData['responseCode'] === '000000' && $responseData['businessData']['successful']) {
-                $products = $responseData['businessData']['data'];
+                $products = $responseData['businessData']['data']['goodsList'];
 
-
+                $products = array_filter($products, function ($product) {
+                    return $product['inventory'] > 0;
+                });
                 return view('shop.thank_you', [
                     'products' => $products,
                 ]);

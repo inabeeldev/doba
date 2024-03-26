@@ -130,3 +130,23 @@
         padding-right: 95px;
     }
 }
+
+
+
+#autocomplete-results {
+    position: absolute;
+    top: 47%;
+    z-index: 41;
+    background-color: #fff;
+    max-height: 350px;
+    overflow-y: auto;
+    width: 92%;
+}
+
+
+.suggestion {
+    margin-top: 18px; /* Adjust as needed */
+    margin-left: 5px;
+    cursor: pointer; /* Change cursor to pointer on hover */
+
+}

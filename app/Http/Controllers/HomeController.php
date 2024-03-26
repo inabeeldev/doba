@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Utils\RsaUtil;
 use Illuminate\Http\Request;
+use App\Models\BusinessSetting;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -108,4 +110,37 @@ class HomeController extends Controller
         return view('admin.order.my_order', compact('orders'));
 
     }
+
+    public function setting()
+    {
+        $tax = BusinessSetting::where('key', 'tax')->first();
+
+        return view('admin.setting.index', compact('tax'));
+        // dd($tax);
+    }
+
+
+    public function updateSetting(Request $request)
+    {
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'key' => 'required',
+            // Add any additional validation rules if needed
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Find the BusinessSetting record for the 'tax' key
+        $tax = BusinessSetting::where('key', 'tax')->first();
+
+        // Update the value of the tax setting with the value from the form
+        $tax->value = $request->input('key');
+        $tax->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Tax setting updated successfully');
+    }
+
 }

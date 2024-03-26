@@ -56,7 +56,7 @@
                             <div class="pd-title">
                                 <span>{{ $productData[0]['sellerName'] }}</span>
                                 <h3>{{ $productData[0]['title'] }}</h3>
-                                <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
+                                {{-- <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a> --}}
                             </div>
                             <div class="pd-rating">
                                 <i class="fa fa-star"></i>
@@ -74,7 +74,7 @@
                             </div><br><br>
                             @if ($productData[0]['children'][0]['stocks'][0]['availableNum'] == 0)
                             <div class="quantity">
-                                <a href="#" class="primary-btn pd-cart" id="addToCartBtn">Out of Stock</a>
+                                <a href="#" class="primary-btn pd-cart" id="addToCartBtn1">Out of Stock</a>
                             </div>
                             @else
                             <div class="quantity">
@@ -135,7 +135,7 @@
                                         <tr>
                                             <td class="p-catagory">Price</td>
                                             <td>
-                                                <div class="p-price">{{ $productData[0]['children'][0]['marketPrice'] }} {{ $productData[0]['children'][0]['currencyName'] }}</div>
+                                                <div class="p-price">{{ $productData[0]['children'][0]['currencyName'] }}{{ $productData[0]['children'][0]['marketPrice'] }}</div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -235,7 +235,7 @@
                             <i class="icon_heart_alt"></i>
                         </div>
                         <ul>
-                            <li class="w-icon active"><a href="#">+ Add To Cart <i class="icon_bag_alt"></i></a></li>
+                            <li class="w-icon active"><a href="{{ route('product-detail', $p['spuId']) }}">+ Add To Cart <i class="icon_bag_alt"></i></a></li>
                         </ul>
                     </div>
                     <div class="pi-text">
@@ -271,7 +271,7 @@
         var quantity = document.getElementById('quantityInput').value;
         var spuId = '{{ $productData[0]['spuId'] }}';
         var title = '{{ $productData[0]['title'] }}';
-        var price = '{{ $productData[0]['children'][0]['stocks'][0]['sellingPrice'] }}';
+        var price = '{{ $productData[0]['children'][0]['marketPrice'] }}';
         var skuPicList = '{{ $productData[0]['children'][0]['skuPicList'][0] }}';
         var itemNo = '{{ $productData[0]['children'][0]['stocks'][0]['itemNo'] }}'; // Assuming $p['itemNo'] is the item ID
         var shippingMethodId = '{{ $productData[0]['shipMethods'][0]['shipId'] }}'; // Assuming $p['shippingMethodId'] is the shipping method ID

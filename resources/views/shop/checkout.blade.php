@@ -101,31 +101,37 @@
                         <div class="order-total">
                             @php
                                 $total = 0;
+                                $totalShipFee = 0;
+                                $totalTax = 0; // Initialize total tax amount
                             @endphp
                             @foreach(session('cart', []) as $cartItem)
                                 @php
                                     $total += $cartItem['price'] * $cartItem['quantity'];
+                                    $totalShipFee += $cartItem['shipFee'];
+                                    $totalTax += $cartItem['tax']; // Add tax amount to total tax
                                 @endphp
                             @endforeach
                             <ul class="order-table">
                                 <li>Product <span>Total</span></li>
                             </ul>
                             @foreach(session('cart', []) as $cartItem)
-                            <ul class="order-table">
-                                <li class="fw-normal">{{ strlen($cartItem['title']) > 30 ? substr($cartItem['title'], 0, 40) . '...' : $cartItem['title'] }} x {{ $cartItem['quantity'] }}
-                                     <span>${{ number_format($cartItem['price'] * $cartItem['quantity'], 2) }}</span>
-                                </li>
-                            </ul>
+                                <ul class="order-table">
+                                    <li class="fw-normal">{{ strlen($cartItem['title']) > 30 ? substr($cartItem['title'], 0, 40) . '...' : $cartItem['title'] }} x {{ $cartItem['quantity'] }}
+                                        <span>${{ number_format($cartItem['price'] * $cartItem['quantity'], 2) }}</span>
+                                    </li>
+                                </ul>
                             @endforeach
                             <ul class="order-table">
                                 <li class="fw-normal">Subtotal <span>${{ number_format($total, 2) }}</span></li>
-                                <li class="total-price">Total <span>${{ number_format($total, 2) }}</span></li>
+                                <li class="fw-normal">Shipping Fee <span>${{ number_format($totalShipFee, 2) }}</span></li>
+                                <li class="fw-normal">Tax <span>${{ number_format($totalTax, 2) }}</span></li> <!-- Display total tax amount -->
+                                <li class="total-price">Total <span>${{ number_format($total + $totalShipFee + $totalTax, 2) }}</span></li>
                             </ul>
 
-                            <input type="hidden" name="storeOrderAmount" value="{{ number_format($total, 2) }}">
+                            <input type="hidden" name="storeOrderAmount" value="{{ number_format($total + $totalShipFee + $totalTax, 2) }}">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                <label for="card" class="form-label">Enter Card Information</label>
+                                    <label for="card" class="form-label">Enter Card Information</label>
                                 </div>
                             </div>
                             <div id="card-element">
@@ -140,6 +146,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </form>

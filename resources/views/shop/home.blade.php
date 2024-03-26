@@ -60,7 +60,7 @@
                 </div>
                 <div class="sb-text">
                     <h6>Free Shipping</h6>
-                    <p>For all order over 99$</p>
+                    <p>For all order over $99</p>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="sb-text">
                     <h6>Delivery On Time</h6>
-                    <p>If good have prolems</p>
+                    <p>All across the world</p>
                 </div>
             </div>
         </div>
@@ -209,41 +209,41 @@
             <div class="col-lg-12 order-1 order-lg-2">
                 <div class="row">
                     @foreach ($products2 as $p)
-                    <div class="col-lg-3 col-sm-4">
-                        <div class="blog-item">
-                            <div class="bi-pic">
-                                <a href="{{ route('product-detail', $p['spuId']) }}">
-                                    <img src="{{ $p['pictureUrl'] }}" alt="">
-                                </a>
-                            </div>
-                            <div class="bi-text text-center">
-                                <a href="{{ route('product-detail', $p['spuId']) }}">
-                                    <h4>{{ strlen($p['title']) > 40 ? substr($p['title'], 0, 40) . '...' : $p['title'] }}</h4>
-                                </a>
-                                <p class="mb-3" style="font-size: 22px; font-weight:bolder">${{ $p['maxPrice'] }}</p>
-                                <div class="countdown-timer2" id="countdownp">
-                                    <div class="cd-item">
-                                        <span>01</span>
-                                        <p>Days</p>
-                                    </div>
-                                    <div class="cd-item">
-                                        <span>9</span>
-                                        <p>Hrs</p>
-                                    </div>
-                                    <div class="cd-item">
-                                        <span>40</span>
-                                        <p>Mins</p>
-                                    </div>
-                                    <div class="cd-item">
-                                        <span>52</span>
-                                        <p>Secs</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <div class="col-lg-3 col-sm-4">
+        <div class="blog-item">
+            <div class="bi-pic">
+                <a href="{{ route('product-detail', $p['spuId']) }}">
+                    <img src="{{ $p['pictureUrl'] }}" alt="">
+                </a>
+            </div>
+            <div class="bi-text text-center">
+                <a href="{{ route('product-detail', $p['spuId']) }}">
+                    <h4 style="font-size: 20px">{{ strlen($p['title']) > 40 ? substr($p['title'], 0, 40) . '...' : $p['title'] }}</h4>
+                </a>
+                <p class="mb-3" style="font-size: 22px; font-weight: bolder">${{ $p['maxPrice'] }}</p>
+                <div class="countdown-timer2">
+                    <!-- Countdown timer will be dynamically generated here -->
+                    <div class="cd-item">
+                        <span>01</span>
+                        <p>Days</p>
                     </div>
-
-                    @endforeach
+                    <div class="cd-item">
+                        <span>9</span>
+                        <p>Hrs</p>
+                    </div>
+                    <div class="cd-item">
+                        <span>40</span>
+                        <p>Mins</p>
+                    </div>
+                    <div class="cd-item">
+                        <span>52</span>
+                        <p>Secs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
 
                 </div>
             </div>
@@ -882,6 +882,32 @@
     });
 </script>
 
+{{-- <script>
 
+$(document).ready(function() {
+
+    $("#countdown2").countdown(timerdate, function(event) {
+        $(this).html(event.strftime("<div class='cd-item'><span>01</span> <p>Days</p> </div>" + "<div class='cd-item'><span>09</span> <p>Hrs</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
+
+    });
+});
+
+</script> --}}
+
+<script>
+    $(document).ready(function() {
+        $(".countdown-timer2").each(function() {
+            var $countdown = $(this);
+            var timerdate = "2024-12-31"; // Replace this with the actual target date
+
+            $countdown.countdown(timerdate, function(event) {
+                $countdown.html(event.strftime("<div class='cd-item'><span>01</span> <p>Days</p> </div>" +
+                    "<div class='cd-item'><span>12</span> <p>Hrs</p> </div>" +
+                    "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" +
+                    "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
+            });
+        });
+    });
+</script>
 
 @endsection

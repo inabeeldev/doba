@@ -19,7 +19,7 @@
             <div class="col-lg-12 order-1 order-lg-2">
                 <div class="product-list">
                     <div class="row">
-                        @foreach ($products['goodsList'] as $p)
+                        @foreach ($products as $p)
 
                         <div class="col-lg-4 col-sm-6">
                             <div class="product-item">

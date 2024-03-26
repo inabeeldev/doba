@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/abc', function () {
-    return view('welcome');
-});
+// Route::get('/abc', function () {
+//     return view('welcome');
+// });
 
 
 Route::get('doba', [DobaController::class, 'someMethod'])->name('doba.index');
@@ -60,6 +60,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::middleware('auth:web')->group(function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin-home');
+        Route::get('/business-settings', [App\Http\Controllers\HomeController::class, 'setting'])->name('business-settings');
+        Route::post('/update-setting', [App\Http\Controllers\HomeController::class, 'updateSetting'])->name('update-setting');
 
 
         Route::get('/orders', [App\Http\Controllers\HomeController::class, 'order'])->name('my-orders');

@@ -80,8 +80,8 @@
                     <div class="col-lg-4 offset-lg-4">
                         <div class="proceed-checkout">
                             <ul>
-                                <li class="subtotal">Subtotal <span>${{ number_format($total, 2) }}</span></li>
-                                <li class="cart-total">Total <span>${{ number_format($total, 2) }}</span></li>
+                                {{-- <li class="subtotal">Subtotal <span>${{ number_format($total, 2) }}</span></li> --}}
+                                <li class="cart-total">Subtotal <span>${{ number_format($total, 2) }}</span></li>
                             </ul>
                             <a href="{{ route('checkout-page') }}" class="proceed-btn">PROCEED TO CHECKOUT</a>
                         </div>

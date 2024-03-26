@@ -3,11 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Nature Checkout Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="description" content="Discover the beauty of online shopping with Naturecheckout, your ultimate destination for high-quality fashion, accessories, and home essentials. Explore a curated collection of eco-friendly products, sustainable fashion, and nature-inspired designs. Shop now and experience the harmony of style and nature.">
+    <meta name="keywords" content="Naturecheckout, online shopping, e-commerce, fashion, accessories, eco-friendly, sustainable, nature-inspired, home essentials, high-quality, curated collection">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Nature Checkout | Website</title>
+    <title>Nature Checkout | Elevating Your Shopping Experience</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('public/admin/img/favicon/favicon.ico') }}" />
+
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -88,14 +90,26 @@
 
                     <div class="col-lg-7 col-md-7">
 
-                        <form action="{{ route('search') }}" method="get">
+                        {{-- <form action="{{ route('search') }}" method="get">
                             <div class="advanced-search">
                                 <div class="input-group">
                                     <input class="searchbar-input typeahead" placeholder="What do you need?" type="text" name="query" id="query" value="{{ request()->input('query') }}" style="color: #000;">
                                     <button type="submit"><i class="ti-search"></i></button>
                                 </div>
                             </div>
+                        </form> --}}
+
+                        <form action="{{ route('search') }}" method="get" id="search-form">
+                            <div class="advanced-search">
+                                <div class="input-group">
+                                    <input class="searchbar-input typeahead" placeholder="What do you need?" type="text" name="query" id="query" value="{{ request()->input('query') }}" style="color: #000;">
+                                    <button type="submit"><i class="ti-search"></i></button>
+
+                                </div>
+                            </div>
                         </form>
+
+                        <div id="autocomplete-results"></div>
 
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
