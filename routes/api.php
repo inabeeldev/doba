@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::post('/order', [App\Http\Controllers\api\HomeController::class, 'createOrder']);
+Route::get('/tax', [App\Http\Controllers\api\HomeController::class, 'tax']);

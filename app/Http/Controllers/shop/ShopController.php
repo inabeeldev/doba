@@ -57,35 +57,47 @@ class ShopController extends Controller
 
     public function home(Request $request)
     {
-        // while (empty($this->categoryData)) {
-        //     // Handle case where categoryData is not available
-        //     return response()->json(['error' => 'Oops! Please refresh the page'], 500);
-        // }
 
+        $catIds = ['BovRVPJymYDO', 'rEqHbnYtsPDQ', 'rsVMvcojyPbw','riqKbocWNJDZ','AnDbvgoDFcVY']; // Add more category IDs as needed
+        $catIds2 = ['AcvdbgJfYPVN','ZjbtDvoRFcVl','TzVHDqcQaPbO','BpvWbAPOIcqo','BIDHVAPidJbn']; // Add more category IDs as needed
+        shuffle($catIds); // Shuffle the array of category IDs
+        shuffle($catIds2); // Shuffle the array of category IDs
+        $selectedCatId = array_pop($catIds); // Select one ID at a time from the shuffled array
+        $selectedCatId2 = array_pop($catIds2); // Select one ID at a time from the shuffled array
 
-            $catIds = ['BovRVPJymYDO', 'rEqHbnYtsPDQ', 'rsVMvcojyPbw','riqKbocWNJDZ','AnDbvgoDFcVY']; // Add more category IDs as needed
-            $catIds2 = ['AcvdbgJfYPVN','ZjbtDvoRFcVl','TzVHDqcQaPbO','BpvWbAPOIcqo','BIDHVAPidJbn']; // Add more category IDs as needed
-            shuffle($catIds); // Shuffle the array of category IDs
-            shuffle($catIds2); // Shuffle the array of category IDs
-            $selectedCatId = array_pop($catIds); // Select one ID at a time from the shuffled array
-            $selectedCatId2 = array_pop($catIds2); // Select one ID at a time from the shuffled array
-            $products_urls = [
-            "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
-            "https://openapi.doba.com/api/goods/doba/spu/list?catId=WCVZbTPQFYDi&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
-            "https://openapi.doba.com/api/goods/doba/spu/list?catId=rnvgbAYilcDw&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
-            "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId2&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
+        $products_urls = [
+        "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
+        "https://openapi.doba.com/api/goods/doba/spu/list?catId=WCVZbTPQFYDi&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
+        "https://openapi.doba.com/api/goods/doba/spu/list?catId=rnvgbAYilcDw&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
+        "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId2&pageNumber=1&pageSize=100&shipFrom=US&shipTo=US",
         ];
 
         $productData = [];
 
         // for timer products
-        $p_url = "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=1&pageSize=4&shipFrom=US&shipTo=US";
+        $p_url = "https://openapi.doba.com/api/goods/doba/spu/list?catId=$selectedCatId&pageNumber=1&pageSize=50&shipFrom=US&shipTo=US";
         $pResponse = Http::withHeaders($this->headers)->get($p_url);
+
+        // Check if the API request was successful
         if ($pResponse->successful()) {
+            // Extract the response data
             $responseData2 = $pResponse->json();
 
+            // Extract the products list
             $products2 = $responseData2['businessData']['data']['goodsList'];
+
+            // Filter products with inventory greater than 0 and limit to 4 items
+            $products2 = array_filter($products2, function ($product) {
+                return $product['inventory'] > 0;
+            });
+
+            // Slice the array to get at most 4 products with inventory greater than 0
+            $products2 = array_slice($products2, 0, 4);
+
+            // Output the filtered products
+            // dd($filteredProducts);
         }
+
         // timer products end
 
         foreach ($products_urls as $products_url) {
@@ -455,6 +467,7 @@ class ShopController extends Controller
         $shippingMethodId =  $shipResponseData['businessData'][0]['data']['costs'][0]['shippingMethodId'];
         $shipFee = $shipResponseData['businessData'][0]['data']['costs'][0]['shipFee'];
 
+
         $itemNo = $request->input('itemNo');
         $quantity = $request->input('quantity');
         // $shippingMethodId = $request->input('shippingMethodId'); // Removed redundant line
@@ -619,6 +632,12 @@ class ShopController extends Controller
                     $payload['openApiImportDSOrderList'][] = $order;
                 }
 
+                // $payloadJson = json_encode($payload, JSON_PRETTY_PRINT);
+
+                // // Output the JSON
+                // echo $payloadJson;
+
+                // die;
                 $response = Http::withHeaders($this->headers) // Assuming $this->headers contains required headers
                                 ->post($url, $payload);
 
@@ -632,6 +651,7 @@ class ShopController extends Controller
                                 'ordBatchId' => $responseData['businessData']['data']['orderSuccessResList'][0]['ordBatchId'], // Adjust this logic as needed
                                 'name' => $order['shippingAddress']['name'],
                                 'email' => $request->email,
+                                'total_price' => $request->storeOrderAmount,
                                 'telephone' => $order['shippingAddress']['telephone'],
                                 'countryCode' => $order['shippingAddress']['countryCode'],
                                 'provinceCode' => $order['shippingAddress']['provinceCode'],

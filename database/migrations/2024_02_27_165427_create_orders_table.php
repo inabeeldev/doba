@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('zip');
             $table->string('addr1');
             $table->string('addr2')->nullable();
+            $table->decimal('total_price', 10, 2)->nullable();
             $table->string('phoneExtension')->nullable();
             $table->enum('payment_status', ['paid', 'unpaid'])->default('unpaid')->nullable();
             $table->timestamps();
