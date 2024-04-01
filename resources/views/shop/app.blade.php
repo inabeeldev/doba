@@ -267,6 +267,9 @@
                             <li class=""><a href="{{ route('shop-page') }}">Shop</a></li>
                             <li class=""><a href="{{ route('trending-products') }}">Trending Products</a></li>
                             <li class=""><a href="{{ url('shopping-cart') }}">Shopping Cart</a></li>
+                            <li class=""><a href="https://helpdesk.naturecheckout.com">Support</a></li>
+                            <li class=""><a href="{{ route('privacy-policy') }}">Privacy Policy</a></li>
+                            <li class=""><a href="{{ route('terms-conditions') }}">Terms</a></li>
                         </ul>
                     </div>
                 </div>

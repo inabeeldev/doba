@@ -733,7 +733,15 @@ class ShopController extends Controller
         }
     }
 
+    public function privacy()
+    {
+        return view('shop.privacy');
+    }
 
+    public function terms()
+    {
+        return view('shop.terms');
+    }
 
 
 }

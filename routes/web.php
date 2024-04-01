@@ -52,6 +52,12 @@ Route::get('/thank-you-page', [App\Http\Controllers\shop\ShopController::class, 
 Route::get('/ships', [App\Http\Controllers\shop\ShopController::class, 'ship'])->name('ships');
 
 
+Route::get('/privacy-policy', [App\Http\Controllers\shop\ShopController::class, 'privacy'])->name('privacy-policy');
+Route::get('/terms-conditions', [App\Http\Controllers\shop\ShopController::class, 'terms'])->name('terms-conditions');
+// Route::get('/ships', [App\Http\Controllers\shop\ShopController::class, 'ship'])->name('ships');
+
+
+
 
 Route::group(['prefix' => 'admin'], function () {
 
