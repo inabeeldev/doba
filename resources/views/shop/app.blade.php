@@ -8,7 +8,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nature Checkout | Elevating Your Shopping Experience</title>
+
+    <link rel="canonical" href="https://www.naturecheckout.com/" />
+
     <link rel="icon" type="image/x-icon" href="{{ asset('public/admin/img/favicon/favicon.ico') }}" />
+
+
+
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org/",
+          "@type": "WebSite",
+          "name": "Nature Checkout",
+          "url": "https://www.naturecheckout.com/",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+        </script>
+
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org/",
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home Page",
+            "item": "https://www.naturecheckout.com/"
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Explore Items",
+            "item": "https://www.naturecheckout.com/shop"
+          },{
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Trending Products",
+            "item": "https://www.naturecheckout.com/trending-products"
+          }]
+        }
+        </script>
+
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": "How do I place an order on Nature Checkout?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ordering from Nature Checkout is easy! Simply browse our products, click on the item you want, choose your options/specs (size, color, etc.), and click \"Add to Cart.\" When you're ready to complete your purchase, click the shopping cart icon and follow the checkout process."
+            }
+          },{
+            "@type": "Question",
+            "name": "How long will the delivery take?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The delivery time depends on your location and the shipping method you choose during the checkout process. Our standard shipping option typically takes between 2 to 10 business days, while express shipping delivers within 5 business days."
+            }
+          },{
+            "@type": "Question",
+            "name": "What payment methods do you accept?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We accept major credit and debit cards, including Visa, Mastercard, American Express, and Discover."
+            }
+          },{
+            "@type": "Question",
+            "name": "What if I have a question about a product or need assistance?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We're here to help! Feel free to contact our Customer Support team via email at info@naturecheckout.com or contact helpdesk during our business hours. We're always happy to assist with any inquiries or concerns."
+            }
+          }]
+        }
+        </script>
 
 
     <!-- Google Font -->
@@ -299,7 +377,7 @@
                             <button type="button">Subscribe</button>
                         </form> --}}
                         <ul>
-                            <li class="text-light">Address: 829 W Palmdale Blvd, Suite 133
+                            <li class="text-light">829 W Palmdale Blvd, Suite 133 <br>
                                 Palmdale, California 93551</li>
                             <li class="text-light">Email: info@naturecheckout.com</li>
                         </ul>

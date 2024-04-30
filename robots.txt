@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /shopping-cart
+Disallow: /checkout
+Disallow: /search
+Disallow: /search?query=*
+
+Allow: /privacy-policy
+Allow: /terms-conditions
+

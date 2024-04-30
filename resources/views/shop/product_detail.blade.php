@@ -67,7 +67,7 @@
                                 <span>(5)</span>
                             </div><br>
                             <div class="pd-desc">
-                                <h4>${{ $productData[0]['children'][0]['marketPrice'] }} <span>${{ $productData[0]['children'][0]['marketPrice'] + 5 }}</span></h4>
+                                <h4>${{ number_format($productData[0]['children'][0]['marketPrice'], 2) }} <span>${{ number_format($productData[0]['children'][0]['marketPrice'] + 5, 2) }}</span></h4>
                             </div>
                             <div class="pd-color">
                                 <h6>Brand: <b>{{ $productData[0]['brand'] ? $productData[0]['brand'] : 'Not Specified' }}</b></h6>

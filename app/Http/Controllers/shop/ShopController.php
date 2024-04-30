@@ -743,5 +743,10 @@ class ShopController extends Controller
         return view('shop.terms');
     }
 
+    public function error()
+    {
+        return view('shop.404');
+    }
+
 
 }

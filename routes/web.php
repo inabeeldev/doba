@@ -19,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::get('/404', [App\Http\Controllers\shop\ShopController::class, 'error'])->name('404-page');
+Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index']);
+
+
+
 
 Route::get('doba', [DobaController::class, 'someMethod'])->name('doba.index');
 
