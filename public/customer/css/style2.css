@@ -150,3 +150,46 @@
     cursor: pointer; /* Change cursor to pointer on hover */
 
 }
+
+
+
+.btn-store {
+    color: #777777;
+    background-color:white;
+    min-width: 240px;
+    padding: 12px 20px !important;
+    border-color: #dddddd !important;
+  }
+
+  .btn-store:focus,
+  .btn-store:hover {
+    color: #ffffff !important;
+    background-color: #7D9B3C;
+    border-color: #7D9B3C !important;
+  }
+
+  .btn-store:focus .fa,
+    .btn-store:hover .fa {
+        color: #ffffff !important;
+    }
+
+
+  .btn-store .btn-label,
+  .btn-store .btn-caption {
+    display: block;
+    text-align: left;
+    line-height: 1;
+  }
+
+  .btn-store .btn-caption {
+    font-size: 24px;
+  }
+
+
+.policy-link {
+      cursor: pointer;
+  }
+
+.policy-link:hover {
+      cursor: pointer;
+  }

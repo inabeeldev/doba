@@ -381,6 +381,19 @@
                                 Palmdale, California 93551</li>
                             <li class="text-light">Email: info@naturecheckout.com</li>
                         </ul>
+
+                        <div class="mt-5">
+                            <a href="https://apps.apple.com/pk/app/nature-checkout/id6482295475" target="_blank" class="btn btn-store mb-2">
+                                <span class="fa fa-apple fa-3x pull-left"></span>
+                                <span class="btn-label">Download on the</span>
+                                <span class="btn-caption">App Store</span>
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.doba_nckt.app" target="_blank" class="btn btn-store">
+                                <span class="fa fa-android fa-3x pull-left"></span>
+                                <span class="btn-label">Download on the</span>
+                                <span class="btn-caption">Google Play</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

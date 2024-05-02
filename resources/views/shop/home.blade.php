@@ -101,7 +101,7 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <a href="{{ route('cat-products', ['catId' => 'grVyDtYRvJbB', 'catName' => 'Men']) }}">
+                <a href="{{ route('cat-products', ['catId' => 'WTbvqfYtVPDr', 'catName' => 'Men']) }}">
                     <div class="single-banner">
                         <img src="{{ asset('public/customer/img/banner-1.jpg') }}" alt="">
                         <div class="inner-text">
@@ -369,7 +369,7 @@
                 </div>
             </div>
             <div class="col-lg-3 offset-lg-1">
-                <a href="{{ route('cat-products', ['catId' => 'grVyDtYRvJbB', 'catName' => 'Men']) }}">
+                <a href="{{ route('cat-products', ['catId' => 'WTbvqfYtVPDr', 'catName' => 'Men']) }}">
                     <div class="product-large set-bg" data-setbg="{{ asset('public/customer/img/products/man-large.jpg') }}">
                         <h2>Men’s</h2>
                         <h6 class="mt-3 text-white"><u>Discover More</u></h6>
