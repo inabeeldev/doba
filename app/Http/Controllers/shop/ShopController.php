@@ -5,7 +5,9 @@ namespace App\Http\Controllers\shop;
 use Exception;
 use Stripe\Charge;
 use Stripe\Stripe;
+use App\Models\City;
 use App\Models\Order;
+use App\Models\State;
 use App\Utils\RsaUtil;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -561,13 +563,14 @@ class ShopController extends Controller
 
     public function checkoutPage()
     {
-
-        return view('shop.checkout');
+        $states = State::all();
+        return view('shop.checkout', compact('states'));
     }
 
 
     public function checkoutStore(Request $request)
     {
+        // dd($request->all());
         try {
             $validator = Validator::make($request->all(), [
                 'billingAddress.name' => 'required',
@@ -746,6 +749,16 @@ class ShopController extends Controller
     public function error()
     {
         return view('shop.404');
+    }
+
+    public function getCities($stateCode) {
+        $state = State::where('code', $stateCode)->first();
+        if($state) {
+            $cities = City::where('state_id', $state->id)->get();
+            return response()->json($cities);
+        } else {
+            return response()->json([]);
+        }
     }
 
 

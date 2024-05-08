@@ -61,19 +61,29 @@
                             <label for="phone">Phone<span>*</span></label>
                             <input type="text" id="phone" name="billingAddress[telephone]" placeholder="Enter your phone number" required>
                         </div>
-                        <div class="col-lg-12">
+                        {{-- <div class="col-lg-12">
                             <label for="cun">Country Code<span>*</span></label>
                             <input type="text" id="cun" name="billingAddress[countryCode]" placeholder="Enter your country code" required>
+                        </div> --}}
+                        <input type="hidden" name="billingAddress[countryCode]" value="US" required>
+
+                        <div class="col-lg-12">
+                            <label for="provinceCode">State<span>*</span></label>
+                            <select name="billingAddress[provinceCode]" id="provinceCode" class="form-control" >
+                                <option value="">Select your state</option>
+                                @foreach ($states as $state)
+                                    <option value="{{ $state->code }}">{{ $state->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-lg-12">
-                            <label for="provinceCode">Province Code<span>*</span></label>
-                            <input type="text" id="provinceCode" name="billingAddress[provinceCode]" placeholder="Enter your province code" required>
+                            <label for="city">Town / City<span>*</span></label>
+                            <select name="billingAddress[city]" id="city" class="form-control">
+                                <option value="">Select your city</option>
+                            </select>
                         </div>
-                        <div class="col-lg-12">
-                            <label for="town">Town / City<span>*</span></label>
-                            <input type="text" id="town" name="billingAddress[city]" placeholder="Enter your town / city" required>
-                        </div>
-                        <div class="col-lg-12">
+                        {{-- <input type="text" id="town" name="billingAddress[city]" placeholder="Enter your town / city" required> --}}
+                        <div class="col-lg-12 mt-3">
                             <label for="street">Street Address 1<span>*</span></label>
                             <input type="text" id="street" class="street-first" name="billingAddress[addr1]" placeholder="Enter your street address" required>
                         </div>
@@ -242,6 +252,35 @@
 </script>
 
 
+<script>
+$(document).ready(function() {
+    $('#provinceCode').select2(); // Initialize Select2 on the province select element
 
+    $('#provinceCode').change(function() {
+        var stateCode = $(this).val();
+        if(stateCode) {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('get-cities', ':stateCode') }}".replace(':stateCode', stateCode),
+                success: function(cities) {
+                    $('#city').empty();
+                    $('#city').append('<option value="">Select your city</option>');
+                    $.each(cities, function(key, city) {
+                        $('#city').append('<option value="' + city.city + '">' + city.city + '</option>');
+                    });
+                    $('#city').select2(); // Re-initialize Select2 on the city select element
+                }
+            });
+        } else {
+            $('#city').empty();
+            $('#city').append('<option value="">Select your city</option>');
+            $('#city').select2(); // Re-initialize Select2 on the city select element
+        }
+    });
+});
+
+
+
+</script>
 
 @endsection

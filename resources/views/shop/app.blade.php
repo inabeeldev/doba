@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -104,6 +104,48 @@
     <link rel="stylesheet" href="{{ asset('public/customer/css/style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('public/customer/css/style2.css') }}" type="text/css">
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+    <!-- Taboola Pixel Code -->
+    <script type='text/javascript'>
+      window._tfa = window._tfa || [];
+      window._tfa.push({notify: 'event', name: 'page_view', id: 1682200});
+      !function (t, f, a, x) {
+             if (!document.getElementById(x)) {
+                t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f);
+             }
+      }(document.createElement('script'),
+      document.getElementsByTagName('script')[0],
+      '//cdn.taboola.com/libtrc/unip/1682200/tfa.js',
+      'tb_tfa_script');
+    </script>
+<!-- End of Taboola Pixel Code -->
+
+
+    <!-- Taboola Pixel Code -->
+    <script>
+        _tfa.push({notify: 'event', name: 'start_checkout', id: 1682200});
+    </script>
+    <!-- End of Taboola Pixel Code -->
+
+
+    <!-- Taboola Pixel Code -->
+    <script>
+        _tfa.push({notify: 'event', name: 'make_purchase', id: 1682200});
+    </script>
+    <!-- End of Taboola Pixel Code -->
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16552512112">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-16552512112');
+    </script>
 
 
 </head>
@@ -405,9 +447,7 @@
                         <div class="copyright-text">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                            All rights reserved | Website Development
-                            By <a href="https://apnadevs.com" target="_blank">ADevs</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            All rights reserved
                         </div>
                         <div class="payment-pic">
                             <img src="{{ asset('public/customer/img/payment-method.png') }}" alt="">
@@ -431,6 +471,8 @@
     <script src="{{ asset('public/customer/js/jquery.slicknav.js') }}"></script>
     <script src="{{ asset('public/customer/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('public/customer/js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 

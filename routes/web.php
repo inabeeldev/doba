@@ -47,6 +47,9 @@ Route::get('/shopping-cart', [App\Http\Controllers\shop\ShopController::class, '
 Route::post('/update-cart-item', [App\Http\Controllers\shop\ShopController::class, 'updateCartItem'])->name('update-cart-item');
 Route::post('/remove-cart-item', [App\Http\Controllers\shop\ShopController::class, 'removeCartItem'])->name('remove-cart-item');
 
+Route::get('/get-cities/{stateCode}', [App\Http\Controllers\shop\ShopController::class, 'getCities'])->name('get-cities');
+
+
 Route::get('/checkout', [App\Http\Controllers\shop\ShopController::class, 'checkoutPage'])->name('checkout-page');
 Route::post('/checkout/store', [App\Http\Controllers\shop\ShopController::class, 'checkoutStore'])->name('checkout-store');
 
