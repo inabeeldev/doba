@@ -47,8 +47,8 @@
                                         <h5>{{ strlen($p['title']) > 50 ? substr($p['title'], 0, 50) . '...' : $p['title'] }}</h5>
                                     </a>
                                     <div class="product-price">
-                                        ${{ $p['maxPrice'] }}
-                                        <span>${{ $p['maxPrice'] + 5 }}</span>
+                                        ${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35), 2) }}
+                                        <span>${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35) + 5, 2) }}</span>
                                     </div>
                                 </div>
                             </div>

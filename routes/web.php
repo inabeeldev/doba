@@ -37,6 +37,7 @@ Route::get('/search', [App\Http\Controllers\shop\ShopController::class, 'search'
 
 
 Route::get('/product-detail/{spuId}', [App\Http\Controllers\shop\ShopController::class, 'productDetail'])->name('product-detail');
+Route::get('/product-variant-detail', [App\Http\Controllers\shop\ShopController::class, 'productDetail2'])->name('product-detail2');
 
 // Route::get('/get-product-data', [App\Http\Controllers\shop\ShopController::class, 'getProductData'])->name('get.product.data');
 

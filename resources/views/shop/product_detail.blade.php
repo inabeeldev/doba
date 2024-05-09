@@ -66,11 +66,19 @@
                                 <i class="fa fa-star-o"></i>
                                 <span>(5)</span>
                             </div><br>
+                            @php
+                                $retailPrice = number_format($productData[0]['children'][0]['stocks'][0]['sellingPrice'] * 1.35, 2);
+                                $retailPrice2 = number_format(($productData[0]['children'][0]['stocks'][0]['sellingPrice'] * 1.35) + 5, 2);
+                            @endphp
                             <div class="pd-desc">
-                                <h4>${{ number_format($productData[0]['children'][0]['marketPrice'], 2) }} <span>${{ number_format($productData[0]['children'][0]['marketPrice'] + 5, 2) }}</span></h4>
+                                <h4>${{ $retailPrice }} <span>${{ $retailPrice2}}</span></h4>
                             </div>
                             <div class="pd-color">
                                 <h6>Brand: <b>{{ $productData[0]['brand'] ? $productData[0]['brand'] : 'Not Specified' }}</b></h6>
+                            </div><br>
+                            <div class="pd-share">
+                                <div class="p-code">SKU : {{ $productData[0]['children'][0]['skuCode'] }}</div>
+
                             </div><br><br>
                             @if ($productData[0]['children'][0]['stocks'][0]['availableNum'] == 0)
                             <div class="quantity">
@@ -84,20 +92,80 @@
                                 <a href="#" class="primary-btn pd-cart" id="addToCartBtn">Add To Cart</a>
                             </div>
                             @endif
+                            <ul class="pd-tags">
+                                @foreach ($productData[0]['children'][0]['variantProps'] as $variant)
+                                    <li><span>{{ $variant['propName'] }}</span>: {{ $variant['propValue'] }}</li>
+                                @endforeach
+                            </ul>
 
                             <ul class="pd-tags">
                                 <li><span>CATEGORY</span>: {{ $productData[0]['cateName'] }}</li>
                                 <li><span>TAGS</span>: {{ implode(', ', $productData[0]['keywords']) }}</li>
 
                             </ul>
-                            <div class="pd-share">
-                                <div class="p-code">Sku : {{ $productData[0]['children'][0]['skuCode'] }}</div>
-                                {{-- <div class="pd-social">
-                                    <a href="#"><i class="ti-facebook"></i></a>
-                                    <a href="#"><i class="ti-twitter-alt"></i></a>
-                                    <a href="#"><i class="ti-linkedin"></i></a>
-                                </div> --}}
+
+
+
+                            {{-- <div class="variant-props">
+                                @foreach ($productData[0]['children'] as $child)
+                                    @if ($child['stocks'][0]['itemNo'] !== $selectedItemNo)
+                                        @foreach ($child['variantProps'] as $variant)
+                                            @if (!empty($variant['propValue']))
+                                                <p>{{ $variant['propName'] }}: {{ $variant['propValue'] }}</button>
+                                            @endif
+                                        @endforeach
+                                        <br> <!-- Add a line break after each child's variant properties -->
+                                    @endif
+                                @endforeach
+                            </div> --}}
+
+                            <!-- Button trigger modal -->
+                            <!-- Check if there are more than one children before showing the link -->
+                            @if (count($productData[0]['children']) > 1)
+                            <h6><a href="#" id="viewOtherVariantsBtn" style="color: #7D9B3C; font-weight:bold" data-toggle="modal" data-target="#otherVariantsModal">View Other Variants</a></h6>
+                            @endif
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="otherVariantsModal" tabindex="-1" role="dialog" aria-labelledby="otherVariantsModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="otherVariantsModalLabel">Other Variants</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                        <!-- Table headers -->
+                                        <thead>
+                                            <tr>
+                                            <th>Item No</th>
+                                            <th>Variant Props</th>
+                                            <th>Stock</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Table body -->
+                                        <tbody id="otherVariantsTableBody">
+                                            <!-- Variants will be dynamically populated here -->
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                    <!-- Modal footer with quantity input and "Add to Cart" button -->
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                                </div>
                             </div>
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -135,7 +203,7 @@
                                         <tr>
                                             <td class="p-catagory">Price</td>
                                             <td>
-                                                <div class="p-price">{{ $productData[0]['children'][0]['currencyName'] }}{{ $productData[0]['children'][0]['marketPrice'] }}</div>
+                                                <div class="p-price">{{ $productData[0]['children'][0]['currencyName'] }}{{ $retailPrice }}</div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -243,9 +311,10 @@
                             <h5>{{ strlen($p['title']) > 50 ? substr($p['title'], 0, 50) . '...' : $p['title'] }}</h5>
                         </a>
                         <div class="product-price">
-                            ${{ $p['maxPrice'] }}
-                            <span>${{ $p['maxPrice'] + 5 }}</span>
+                            ${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35), 2) }}
+                            <span>${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35) + 5, 2) }}</span>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -271,7 +340,7 @@
         var quantity = document.getElementById('quantityInput').value;
         var spuId = '{{ $productData[0]['spuId'] }}';
         var title = '{{ $productData[0]['title'] }}';
-        var price = '{{ $productData[0]['children'][0]['marketPrice'] }}';
+        var price = '{{ $retailPrice }}';
         var skuPicList = '{{ $productData[0]['children'][0]['skuPicList'][0] }}';
         var itemNo = '{{ $productData[0]['children'][0]['stocks'][0]['itemNo'] }}'; // Assuming $p['itemNo'] is the item ID
         var shippingMethodId = '{{ $productData[0]['shipMethods'][0]['shipId'] }}'; // Assuming $p['shippingMethodId'] is the shipping method ID
@@ -307,6 +376,203 @@
         }));
     });
 </script>
+
+
+
+<script>
+    // JavaScript to handle click events on variant property buttons
+    const propButtons = document.querySelectorAll('.prop-button');
+
+    propButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const propValue = button.dataset.propValue;
+            filterChildren(propValue);
+        });
+    });
+
+    function filterChildren(propValue) {
+        const childProducts = document.querySelectorAll('.child-product');
+
+        childProducts.forEach(product => {
+            const variantProps = product.dataset.variantProps.split(',');
+            if (variantProps.includes(propValue)) {
+                product.style.display = 'block'; // Show the product if it matches the selected variant property
+            } else {
+                product.style.display = 'none'; // Hide the product if it doesn't match
+            }
+        });
+    }
+</script>
+
+
+{{-- <script>
+    document.getElementById('viewOtherVariantsBtn').addEventListener('click', function() {
+      // Clear existing table body
+      document.getElementById('otherVariantsTableBody').innerHTML = '';
+
+      // Populate table body with other variants
+      @foreach ($productData[0]['children'] as $child)
+        @if ($child['stocks'][0]['itemNo'] !== $selectedItemNo)
+          var row = document.createElement('tr');
+
+          // Add itemNo cell
+          var itemNoCell = document.createElement('td');
+          itemNoCell.textContent = '{{ $child['stocks'][0]['itemNo'] }}';
+          row.appendChild(itemNoCell);
+
+          // Add variantProps cell
+          var variantPropsCell = document.createElement('td');
+          variantPropsCell.textContent = '';
+          @foreach ($child['variantProps'] as $variant)
+            variantPropsCell.textContent += '{{ $variant['propName'] }}: {{ $variant['propValue'] }}';
+            if (@json(!$loop->last)) {
+              variantPropsCell.textContent += ', ';
+            }
+          @endforeach
+          row.appendChild(variantPropsCell);
+
+          // Add quantity input cell
+          var quantityCell = document.createElement('td');
+          var quantityInput = document.createElement('input');
+          quantityInput.type = 'number';
+          quantityInput.className = 'form-control';
+          quantityInput.value = '1';
+          quantityInput.min = '1';
+          quantityCell.appendChild(quantityInput);
+          row.appendChild(quantityCell);
+
+          // Add "Add to Cart" button cell
+          var addToCartCell = document.createElement('td');
+          var addToCartButton = document.createElement('button');
+          addToCartButton.type = 'button';
+          addToCartButton.className = 'btn btn-primary';
+          addToCartButton.textContent = 'Add to Cart';
+          addToCartButton.addEventListener('click', function() {
+            // Handle "Add to Cart" button click event for this variant
+            var quantity = quantityInput.value;
+            var itemNo = '{{ $child['stocks'][0]['itemNo'] }}'; // Assuming $child['stocks'][0]['itemNo'] is the item ID
+
+            // Send data to server via AJAX
+            // Implement your AJAX request here
+          });
+          addToCartCell.appendChild(addToCartButton);
+          row.appendChild(addToCartCell);
+
+          // Append the row to the table body
+          document.getElementById('otherVariantsTableBody').appendChild(row);
+        @endif
+      @endforeach
+    });
+  </script> --}}
+
+
+  <script>
+    document.getElementById('viewOtherVariantsBtn').addEventListener('click', function() {
+      // Clear existing table body
+      document.getElementById('otherVariantsTableBody').innerHTML = '';
+
+      // Populate table body with other variants
+      @foreach ($productData[0]['children'] as $child)
+        @if ($child['stocks'][0]['itemNo'] !== $selectedItemNo)
+          var row = document.createElement('tr');
+
+          // Add itemNo cell
+          var itemNoCell = document.createElement('td');
+          itemNoCell.textContent = '{{ $child['stocks'][0]['itemNo'] }}';
+          row.appendChild(itemNoCell);
+
+          // Add variantProps cell
+          var variantPropsCell = document.createElement('td');
+          variantPropsCell.textContent = '';
+          @foreach ($child['variantProps'] as $variant)
+            variantPropsCell.textContent += '{{ $variant['propName'] }}: {{ $variant['propValue'] }}';
+            if (@json(!$loop->last)) {
+              variantPropsCell.textContent += ', ';
+            }
+          @endforeach
+          row.appendChild(variantPropsCell);
+
+          var stockCell = document.createElement('td');
+          var stock = '{{ $child['stocks'][0]['availableNum'] }}';
+          stockCell.textContent = stock;
+          row.appendChild(stockCell);
+
+
+          // Add price cell
+          var priceCell = document.createElement('td');
+          var price = '{{ $child['stocks'][0]['sellingPrice'] * 1.35 }}'; // Calculate the price
+          priceCell.textContent = '$' + price; // Display the price with currency symbol
+          row.appendChild(priceCell);
+
+
+
+          // Add quantity input cell
+          var quantityCell = document.createElement('td');
+          var quantityInput = document.createElement('input');
+          quantityInput.type = 'number';
+          quantityInput.className = 'form-control';
+          quantityInput.value = '1';
+          quantityInput.min = '1';
+          quantityCell.appendChild(quantityInput);
+          row.appendChild(quantityCell);
+
+          // Add "Add to Cart" button cell
+          var addToCartCell = document.createElement('td');
+          var addToCartButton = document.createElement('button');
+          addToCartButton.type = 'button';
+          addToCartButton.className = 'btn btn-primary';
+          addToCartButton.textContent = 'Add to Cart';
+          addToCartButton.addEventListener('click', function() {
+            // Handle "Add to Cart" button click event for this variant
+            var quantity = quantityInput.value;
+            var itemNo = '{{ $child['stocks'][0]['itemNo'] }}'; // Assuming $child['stocks'][0]['itemNo'] is the item ID
+            var price = '{{ $child['stocks'][0]['sellingPrice'] * 1.35 }}';
+            var shippingMethodId = '{{ $productData[0]['shipMethods'][0]['shipId'] }}';
+            var spuId = '{{ $productData[0]['spuId'] }}';
+            var title = '{{ $productData[0]['title'] }}';
+            var skuPicList = '{{ $productData[0]['children'][0]['skuPicList'][0] }}';
+
+            // Send data to server via AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ route("add-to-cart") }}'); // Using Laravel route name
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}'); // Include CSRF token in the request header
+            xhr.onload = function() {
+              if (xhr.status === 200) {
+                Swal.fire({
+                  icon: "success",
+                  title: "Success!",
+                  text: "Item added to cart successfully!",
+                  timer: 1000, // Set a timer to automatically close the alert after 2 seconds
+                  showConfirmButton: false // Hide the "OK" button
+                }).then(function() {
+                  location.reload(); // Reload the page after the alert is closed
+                });
+              } else {
+                alert('Failed to add item to cart.');
+              }
+            };
+            xhr.send(JSON.stringify({
+              itemNo: itemNo,
+              quantity: quantity,
+              price: price,
+              shippingMethodId: shippingMethodId,
+              spuId: spuId,
+              title: title,
+              skuPicList: skuPicList
+            }));
+          });
+          addToCartCell.appendChild(addToCartButton);
+          row.appendChild(addToCartCell);
+
+          // Append the row to the table body
+          document.getElementById('otherVariantsTableBody').appendChild(row);
+        @endif
+      @endforeach
+    });
+  </script>
+
+
 
 
 

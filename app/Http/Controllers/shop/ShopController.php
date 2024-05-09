@@ -279,15 +279,15 @@ class ShopController extends Controller
 
     public function productDetail($spuId)
     {
-
+        // session()->flush();
         $product_url = "https://openapi.doba.com/api/goods/doba/spu/detail?spuId=$spuId";
 
         $productResponse = Http::withHeaders($this->headers)->get($product_url);
 
         if ($productResponse->successful()) {
             $productData = $productResponse->json()['businessData']['data'];
-
-            // dd($productData);
+            $selectedItemNo = $productData[0]['children'][0]['stocks'][0]['itemNo'];
+            //   dd($productData);
 
             $cateId = $productResponse->json()['businessData']['data'][0]['cateId'];
             $related_products_url = "https://openapi.doba.com/api/goods/doba/spu/list?catId=$cateId&pageNumber=1&pageSize=100";
@@ -295,6 +295,7 @@ class ShopController extends Controller
             // dd($productData);
             if ($relatedProductResponse->successful()) {
                 $relatedProductsData = $relatedProductResponse->json()['businessData']['data']['goodsList'];
+                // dd($relatedProductsData);
 
 
                 $relatedProductsData = array_filter($relatedProductsData, function ($product) {
@@ -315,6 +316,7 @@ class ShopController extends Controller
                 'productData' => $productData,
                 'randomRelatedProducts' => $randomRelatedProducts ?? [],
                 'randomReviews' => $randomReviews,
+                'selectedItemNo' => $selectedItemNo,
             ]);
         } else {
             // Handle unsuccessful response
@@ -443,6 +445,7 @@ class ShopController extends Controller
 
     public function addToCart(Request $request)
     {
+        // dd($request->all());
         $tax = BusinessSetting::where('key', 'tax')->first()->value;
 
         $requestData = [

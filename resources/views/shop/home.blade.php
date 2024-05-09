@@ -220,7 +220,7 @@
                 <a href="{{ route('product-detail', $p['spuId']) }}">
                     <h4 style="font-size: 20px">{{ strlen($p['title']) > 40 ? substr($p['title'], 0, 40) . '...' : $p['title'] }}</h4>
                 </a>
-                <p class="mb-3" style="font-size: 22px; font-weight: bolder">${{ $p['maxPrice'] }}</p>
+                <p class="mb-3" style="font-size: 22px; font-weight: bolder">${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35), 2) }}</p>
                 <div class="countdown-timer2">
                     <!-- Countdown timer will be dynamically generated here -->
                     <div class="cd-item">
@@ -287,8 +287,8 @@
                                         <h5>{{ strlen($p['title']) > 50 ? substr($p['title'], 0, 50) . '...' : $p['title'] }}</h5>
                                     </a>
                                     <div class="product-price">
-                                        ${{ $p['maxPrice'] }}
-                                        <span>${{ $p['maxPrice'] + 5 }}</span>
+                                        ${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35), 2) }}
+                                        <span>${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35) + 5, 2) }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -360,8 +360,8 @@
                                 <h5>{{ strlen($p['title']) > 50 ? substr($p['title'], 0, 50) . '...' : $p['title'] }}</h5>
                             </a>
                             <div class="product-price">
-                                ${{ $p['maxPrice'] }}
-                                <span>${{ $p['maxPrice'] + 5 }}</span>
+                                ${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35), 2) }}
+                                <span>${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35) + 5, 2) }}</span>
                             </div>
                         </div>
                     </div>
@@ -462,8 +462,8 @@
                                 <h5>{{ strlen($p['title']) > 50 ? substr($p['title'], 0, 50) . '...' : $p['title'] }}</h5>
                             </a>
                             <div class="product-price">
-                                ${{ $p['maxPrice'] }}
-                                <span>${{ $p['maxPrice'] + 5 }}</span>
+                                ${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35), 2) }}
+                                <span>${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35) + 5, 2) }}</span>
                             </div>
                         </div>
                     </div>
@@ -520,8 +520,8 @@
                                         <h5>{{ strlen($p['title']) > 50 ? substr($p['title'], 0, 50) . '...' : $p['title'] }}</h5>
                                     </a>
                                     <div class="product-price">
-                                        ${{ $p['maxPrice'] }}
-                                        <span>${{ $p['maxPrice'] + 5 }}</span>
+                                        ${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35), 2) }}
+                                        <span>${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35) + 5, 2) }}</span>
                                     </div>
                                 </div>
                             </div>
