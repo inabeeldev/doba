@@ -49,7 +49,7 @@ class HomeController extends Controller
     public function dobaOrder()
     {
         // session()->flush();
-        $order_url = "https://openapi.doba.com/api/order/doba/queryOrder?pageSize=10&pageNo=1";
+        $order_url = "https://openapi.doba.com/api/order/doba/queryOrder?pageSize=1000&pageNo=1";
 
         $orderResponse = Http::withHeaders($this->headers)->get($order_url);
 
@@ -58,10 +58,41 @@ class HomeController extends Controller
 
             if ($orderData['responseCode'] === '000000' && $orderData['businessData'][0]) {
                 $orders = $orderData['businessData'][0]['data'];
-                // dd($orders);
+                //  dd($orders);
                 // Calculate total pages
 
                 return view('admin.order.doba', [
+                    'orders' => $orders,
+                ]);
+            } else {
+                return response()->json(['error' => 'Unable to fetch response'], $orderData->status());
+            }
+
+        } else {
+            // Handle unsuccessful response
+            $statusCode = $orderResponse->status();
+            return response()->json(['error' => 'Unable to fetch orders'], $statusCode);
+        }
+    }
+
+
+
+    public function dobaUnpaidOrder()
+    {
+        // session()->flush();
+        $order_url = "https://openapi.doba.com/api/order/doba/queryOrder?pageSize=100&pageNo=1&status=1";
+
+        $orderResponse = Http::withHeaders($this->headers)->get($order_url);
+
+        if ($orderResponse->successful()) {
+            $orderData = $orderResponse->json();
+
+            if ($orderData['responseCode'] === '000000' && $orderData['businessData'][0]) {
+                $orders = $orderData['businessData'][0]['data'];
+                //  dd($orders);
+                // Calculate total pages
+
+                return view('admin.order.doba_unpaid', [
                     'orders' => $orders,
                 ]);
             } else {

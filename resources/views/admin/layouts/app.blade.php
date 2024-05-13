@@ -168,7 +168,13 @@
                     </li>
                     <li class="menu-item {{ request()->is('admin/doba-orders') ? 'active' : '' }}">
                     <a href="{{ route('doba-orders') }}" class="menu-link">
-                        <div data-i18n="create">Doba</div>
+                        <div data-i18n="create">All Doba</div>
+                    </a>
+                    </li>
+
+                    <li class="menu-item {{ request()->is('admin/doba-unpaid-orders') ? 'active' : '' }}">
+                    <a href="{{ route('doba-unpaid-orders') }}" class="menu-link">
+                        <div data-i18n="create">Unpaid Doba</div>
                     </a>
                     </li>
                 </ul>

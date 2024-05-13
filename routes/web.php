@@ -81,6 +81,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/orders', [App\Http\Controllers\HomeController::class, 'order'])->name('my-orders');
         Route::get('/doba-orders', [App\Http\Controllers\HomeController::class, 'dobaOrder'])->name('doba-orders');
+        Route::get('/doba-unpaid-orders', [App\Http\Controllers\HomeController::class, 'dobaUnpaidOrder'])->name('doba-unpaid-orders');
         Route::get('/doba-order-detail/{ordBusiId}', [App\Http\Controllers\HomeController::class, 'dobaOrderDetail'])->name('doba-order-detail');
 
 
