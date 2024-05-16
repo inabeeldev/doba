@@ -67,8 +67,8 @@
                                 <span>(5)</span>
                             </div><br>
                             @php
-                                $retailPrice = number_format($productData[0]['children'][0]['stocks'][0]['sellingPrice'] * 1.35, 2);
-                                $retailPrice2 = number_format(($productData[0]['children'][0]['stocks'][0]['sellingPrice'] * 1.35) + 5, 2);
+                                $retailPrice = number_format($productData[0]['children'][0]['stocks'][0]['sellingPrice'] * 1.45, 2);
+                                $retailPrice2 = number_format(($productData[0]['children'][0]['stocks'][0]['sellingPrice'] * 1.45) + 5, 2);
                             @endphp
                             <div class="pd-desc">
                                 <h4>${{ $retailPrice }} <span>${{ $retailPrice2}}</span></h4>
@@ -311,8 +311,8 @@
                             <h5>{{ strlen($p['title']) > 50 ? substr($p['title'], 0, 50) . '...' : $p['title'] }}</h5>
                         </a>
                         <div class="product-price">
-                            ${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35), 2) }}
-                            <span>${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.35) + 5, 2) }}</span>
+                            ${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.45), 2) }}
+                            <span>${{ number_format($p['maxPrice'] + ($p['maxPrice'] * 0.45) + 5, 2) }}</span>
                         </div>
 
                     </div>
@@ -500,7 +500,7 @@
 
           // Add price cell
           var priceCell = document.createElement('td');
-          var price = '{{ $child['stocks'][0]['sellingPrice'] * 1.35 }}'; // Calculate the price
+          var price = '{{ $child['stocks'][0]['sellingPrice'] * 1.45 }}'; // Calculate the price
           priceCell.textContent = '$' + price; // Display the price with currency symbol
           row.appendChild(priceCell);
 
@@ -526,7 +526,7 @@
             // Handle "Add to Cart" button click event for this variant
             var quantity = quantityInput.value;
             var itemNo = '{{ $child['stocks'][0]['itemNo'] }}'; // Assuming $child['stocks'][0]['itemNo'] is the item ID
-            var price = '{{ $child['stocks'][0]['sellingPrice'] * 1.35 }}';
+            var price = '{{ $child['stocks'][0]['sellingPrice'] * 1.45 }}';
             var shippingMethodId = '{{ $productData[0]['shipMethods'][0]['shipId'] }}';
             var spuId = '{{ $productData[0]['spuId'] }}';
             var title = '{{ $productData[0]['title'] }}';

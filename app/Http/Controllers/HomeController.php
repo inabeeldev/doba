@@ -137,9 +137,8 @@ class HomeController extends Controller
 
     public function order()
     {
-        $orders = Order::all();
+        $orders = Order::latest()->get();
         return view('admin.order.my_order', compact('orders'));
-
     }
 
     public function setting()

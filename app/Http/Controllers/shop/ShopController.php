@@ -12,8 +12,10 @@ use App\Utils\RsaUtil;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\BusinessSetting;
+use App\Mail\OrderConfirmationMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -652,7 +654,7 @@ class ShopController extends Controller
                     // dd($responseData);
                     if ($responseData['businessData']['data']['orderSuccessResList']) {
                         foreach ($uniqueOrders as $order) {
-                            Order::create([
+                            $orderm = Order::create([
                                 'orderNumber' => $responseData['businessData']['data']['orderSuccessResList'][0]['orderNumber'],
                                 'ordBatchId' => $responseData['businessData']['data']['orderSuccessResList'][0]['ordBatchId'], // Adjust this logic as needed
                                 'name' => $order['shippingAddress']['name'],
@@ -668,6 +670,8 @@ class ShopController extends Controller
                                 'phoneExtension' => $order['shippingAddress']['phoneExtension'],
                                 'payment_status' => 'paid', // Assuming the initial status is unpaid
                             ]);
+
+                            Mail::to($request->email)->send(new OrderConfirmationMail($orderm));
                         }
                         session()->forget('cart');
                         return redirect()->route('thank-you-page');
