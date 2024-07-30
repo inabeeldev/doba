@@ -3,11 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Discover the beauty of online shopping with Naturecheckout, your ultimate destination for high-quality fashion, accessories, and home essentials. Explore a curated collection of eco-friendly products, sustainable fashion, and nature-inspired designs. Shop now and experience the harmony of style and nature.">
-    <meta name="keywords" content="Naturecheckout, online shopping, e-commerce, fashion, accessories, eco-friendly, sustainable, nature-inspired, home essentials, high-quality, curated collection">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Nature Checkout | Elevating Your Shopping Experience</title>
+    <title>@yield('title', 'Explore Best Online Shopping Experience - Nature Checkout')</title>
+    <meta name="description" content="@yield('meta_description', 'Shop the latest trends at Nature Checkout. Enjoy unbeatable prices, fast shipping, and top-quality products. Find everything you need in one place today!')">
+    <meta name="keywords" content="">
+
 
     <link rel="canonical" href="https://www.naturecheckout.com/" />
 
@@ -309,7 +310,7 @@
                         <ul class="depart-hover">
                             @foreach($categoryData as $category)
                                 <li class="main-category">
-                                    <a href="{{ route('cat-products', ['catId' => $category['catId'], 'catName' => $category['catName']]) }}">
+                                    <a href="{{ route('cat-products', ['catId' => $category['catId'], 'catName' => str_replace(' ', '-', $category['catName'])]) }}">
                                         {{ $category['catName'] }}
                                     </a>
                                     @if(isset($category['node']))
@@ -317,12 +318,12 @@
                                         <ul>
                                             @foreach($category['node'] as $subCategory)
                                                 <li class="sub-category">
-                                                    <a href="{{ route('cat-products', ['catId' => $subCategory['catId'], 'catName' => $subCategory['catName']]) }}">{{ $subCategory['catName'] }}</a>
+                                                    <a href="{{ route('cat-products', ['catId' => $subCategory['catId'], 'catName' => str_replace(' ', '-', $subCategory['catName'])]) }}">{{ $subCategory['catName'] }}</a>
                                                     @if(isset($subCategory['node']))
                                                     <div class="sub-sub-categories">
                                                         <ul>
                                                             @foreach($subCategory['node'] as $subSubCategory)
-                                                                <li><a href="{{ route('cat-products', ['catId' => $subSubCategory['catId'], 'catName' => $subSubCategory['catName']]) }}">{{ $subSubCategory['catName'] }}</a></li>
+                                                                <li><a href="{{ route('cat-products', ['catId' => $subSubCategory['catId'], 'catName' => str_replace(' ', '-', $subSubCategory['catName'])]) }}">{{ $subSubCategory['catName'] }}</a></li>
                                                             @endforeach
                                                         </ul>
                                                     </div>
@@ -376,7 +377,7 @@
                         <ul>
 
                             <li>
-                                We provide convenient and expeditious service to all users (merchants and consumers) in areas of consumer spending. Our service is to improve merchant - customer relations while offering positive contribution to the overall economy.
+                                We offer quick and easy services to both merchants and consumers in the area of spending. Our goal is to strengthen the relationship between merchants and customers while also positively impacting the economy.
                             </li>
                         </ul>
                         <div class="footer-social">
@@ -411,7 +412,7 @@
                         @foreach ($categoryData as $index => $category)
                             @if ($index < 6)
                                 <ul>
-                                    <li><a href="{{ route('cat-products', ['catId' => $category['catId'], 'catName' => $category['catName']]) }}">{{ $category['catName'] }}</a></li>
+                                    <li><a href="{{ route('cat-products', ['catId' => $category['catId'], 'catName' => str_replace(' ', '-', $category['catName'])]) }}">{{ $category['catName'] }}</a></li>
                                 </ul>
                             @endif
                         @endforeach

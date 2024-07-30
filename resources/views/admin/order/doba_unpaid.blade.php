@@ -47,6 +47,7 @@
             <tr>
                 <th>#</th>
                 <th>Order Detail</th>
+                <th>Order Date</th>
                 <th>Order Batch Id</th>
                 <th>Total</th>
                 <th>Payment Status</th>
@@ -55,34 +56,59 @@
             </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-                @foreach ($orders['orderBatchList'] as $order)
-                <tr>
+                @if (!empty($orders['orderBatchList']))
+                    @php $hasUnpaidOrders = false; @endphp
+                    @foreach ($orders['orderBatchList'] as $order)
+                        @if (!empty($order['waitingPayOrderList']))
+                            @php $hasUnpaidOrders = true; @endphp
+                            @break
+                        @endif
+                    @endforeach
 
-                    <td><strong>{{ $loop->iteration }}</strong></td>
-                    @if(!empty($order['waitingPayOrderList']))
-                    <td>
-                        <a class="btn btn-primary btn-show text-white" href="{{ route('doba-order-detail', $order['waitingPayOrderList'][0]['ordBusiId']) }}">Show</a>
-                    </td>
+                    @if ($hasUnpaidOrders)
+                        @foreach ($orders['orderBatchList'] as $order)
+                            <tr>
+                                <td><strong>{{ $loop->iteration }}</strong></td>
+                                @if(!empty($order['waitingPayOrderList']))
+                                    <td>
+                                        <a class="btn btn-primary btn-show text-white" href="{{ route('doba-order-detail', $order['waitingPayOrderList'][0]['ordBusiId']) }}">Show</a>
+                                    </td>
+                                @else
+                                    <td>
+                                        <a class="btn btn-primary btn-show text-white" href="{{ route('doba-order-detail', $order['paidOrderList'][0]['ordBusiId']) }}">Show</a>
+                                    </td>
+                                @endif
+                                <td>
+                                    @if (isset($order['paidOrderList'][0]['ordPalceTime']))
+                                        @php
+                                            $ordPlaceTime = preg_replace('/\s*\(UTC[^)]*\)/', '', $order['paidOrderList'][0]['ordPalceTime']);
+                                            echo \Carbon\Carbon::parse($ordPlaceTime)->format('d-m-Y H:i:s');
+                                        @endphp
+                                    @endif
+                                </td>
+                                <td>{{ $order['ordBatchId'] }}</td>
+                                <td>{{ $order['totalPay'] }}</td>
+                                @if(empty($order['waitingPayOrderList']))
+                                    <td>Closed</td>
+                                @else
+                                    <td>Unpaid</td>
+                                @endif
+                                <td>{{ $order['orderPayURL'] }}</td>
+                                <td>{{ \Carbon\Carbon::parse($order['payDeadLine'])->format('d-m-Y') }}</td>
+                            </tr>
+                        @endforeach
                     @else
-                    <td>
-                        <a class="btn btn-primary btn-show text-white" href="{{ route('doba-order-detail', $order['paidOrderList'][0]['ordBusiId']) }}">Show</a>
-                    </td>
+                        <tr>
+                            <td colspan="7" class="text-center">No unpaid orders</td>
+                        </tr>
                     @endif
-                    <td>{{ $order['ordBatchId'] }}</td>
-                    <td>{{ $order['totalPay'] }}</td>
-                    @if(empty($order['waitingPayOrderList']))
-                        <td>Closed</td>
-                    @else
-                        <td>Unpaid</td>
-                    @endif
-
-                    <td>{{ $order['orderPayURL'] }}</td>
-                    <td>{{ $order['payDeadLine'] }}</td>
-                </tr>
-
-
-                @endforeach
+                @else
+                    <tr>
+                        <td colspan="7" class="text-center">No orders found</td>
+                    </tr>
+                @endif
             </tbody>
+
         </table>
         </div>
     </div>

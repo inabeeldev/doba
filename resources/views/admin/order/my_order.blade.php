@@ -46,6 +46,7 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>Date</th>
                 <th>Order No</th>
                 <th>Order Batch Id</th>
                 <th>Payment Status</th>
@@ -63,6 +64,7 @@
 
                     <td><strong>{{ $loop->iteration }}</strong></td>
 
+                    <td>{{ $order->created_at->format('d-m-Y') }}</td>
                     <td>{{ $order->orderNumber }}</td>
                     <td>{{ $order->ordBatchId }}</td>
                     <td>{{ $order->payment_status }}</td>

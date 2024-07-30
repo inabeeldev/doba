@@ -3,6 +3,8 @@
 @section('content')
 
 
+@section('title', 'Online Shopping - Nature Checkout')
+@section('meta_description', 'Discover a wide range of products at Nature Checkout, your go-to online shopping destination in the USA. Shop now for the latest trends and essentials.')
 
 
 
@@ -34,7 +36,7 @@
         <div class="row">
             <div class="col-lg-12 mb-3">
                 <div class="section-title">
-                    <h2>Shop</h2>
+                    <h2>Online Shopping</h2>
                 </div>
             </div>
             <div class="col-lg-12 order-1 order-lg-2">
@@ -82,7 +84,7 @@
                         <ul class="pagination pagination-lg justify-content-center">
                             @if($currentPage > 1)
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ url('shop?page=1') }}" aria-label="First">
+                                    <a class="page-link" href="{{ route('shop-page', ['page' => 1]) }}" aria-label="First">
                                         <span aria-hidden="true">&laquo;&laquo;</span>
                                         <span class="sr-only">First</span>
                                     </a>
@@ -91,13 +93,13 @@
 
                             @for($i = max(1, $currentPage - floor($maxPagesToShow / 2)); $i <= min($totalPages, $currentPage + floor($maxPagesToShow / 2)); $i++)
                                 <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ url('shop?page=' . $i) }}">{{ $i }}</a>
+                                    <a class="page-link" href="{{ route('shop-page', ['page' => $i]) }}">{{ $i }}</a>
                                 </li>
                             @endfor
 
                             @if($currentPage < $totalPages)
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ url('shop?page=' . $totalPages) }}" aria-label="Last">
+                                    <a class="page-link" href="{{ route('shop-page', ['page' => $totalPages]) }}" aria-label="Last">
                                         <span aria-hidden="true">&raquo;&raquo;</span>
                                         <span class="sr-only">Last</span>
                                     </a>

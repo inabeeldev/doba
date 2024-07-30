@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\State;
 use App\Utils\RsaUtil;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\BusinessSetting;
 use App\Mail\OrderConfirmationMail;
@@ -402,7 +403,7 @@ class ShopController extends Controller
 
     public function catProduct(Request $request, $catId, $catName)
     {
-
+        $catName = Str::replace('-', ' ', $catName);
         $pageSize = 32; // Number of products per page
         $page = $request->query('page', 1);
 

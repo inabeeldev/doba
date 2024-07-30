@@ -3,6 +3,8 @@
 @section('content')
 
 
+@section('title', 'Trending Products 2024 - Nature Checkout')
+@section('meta_description', 'Stay ahead with the latest trending products of 2024 at Nature Checkout. Explore popular items and must-haves for the year.')
 
 
 
@@ -81,7 +83,7 @@
                         <ul class="pagination pagination-lg justify-content-center">
                             @if($currentPage > 1)
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ url('trending-products?page=1') }}" aria-label="First">
+                                    <a class="page-link" href="{{ route('trending-products', ['page' => 1]) }}" aria-label="First">
                                         <span aria-hidden="true">&laquo;&laquo;</span>
                                         <span class="sr-only">First</span>
                                     </a>
@@ -90,13 +92,13 @@
 
                             @for($i = max(1, $currentPage - floor($maxPagesToShow / 2)); $i <= min($totalPages, $currentPage + floor($maxPagesToShow / 2)); $i++)
                                 <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ url('trending-products?page=' . $i) }}">{{ $i }}</a>
+                                    <a class="page-link" href="{{ route('trending-products', ['page' => $i]) }}">{{ $i }}</a>
                                 </li>
                             @endfor
 
                             @if($currentPage < $totalPages)
                                 <li class="page-item">
-                                    <a class="page-link" href="{{ url('trending-products?page=' . $totalPages) }}" aria-label="Last">
+                                    <a class="page-link" href="{{ route('trending-products', ['page' => $totalPages]) }}" aria-label="Last">
                                         <span aria-hidden="true">&raquo;&raquo;</span>
                                         <span class="sr-only">Last</span>
                                     </a>

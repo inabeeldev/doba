@@ -2,6 +2,8 @@
 
 @section('content')
 
+@section('title', 'Explore Best Online Shopping Experience - Nature Checkout')
+@section('meta_description', 'Shop the latest trends at Nature Checkout. Enjoy unbeatable prices, fast shipping, and top-quality products. Find everything you need in one place today!')
 
 
 <!-- Hero Section Begin -->

@@ -47,6 +47,7 @@
             <tr>
                 <th>#</th>
                 <th>Order Detail</th>
+                <th>Order Date</th>
                 <th>Order Batch Id</th>
                 <th>Total</th>
                 <th>Payment Status</th>
@@ -68,6 +69,14 @@
                         <a class="btn btn-primary btn-show text-white" href="{{ route('doba-order-detail', $order['paidOrderList'][0]['ordBusiId']) }}">Show</a>
                     </td>
                     @endif
+                    <td>
+                        @if (isset($order['paidOrderList'][0]['ordPalceTime']))
+                            @php
+                                $ordPlaceTime = preg_replace('/\s*\(UTC[^)]*\)/', '', $order['paidOrderList'][0]['ordPalceTime']);
+                                echo \Carbon\Carbon::parse($ordPlaceTime)->format('d-m-Y H:i:s');
+                            @endphp
+                        @endif
+                    </td>
                     <td>{{ $order['ordBatchId'] }}</td>
                     <td>{{ $order['totalPay'] }}</td>
                     @if(empty($order['waitingPayOrderList']))

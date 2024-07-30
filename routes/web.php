@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/404', [App\Http\Controllers\shop\ShopController::class, 'error'])->name('404-page');
-Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index']);
+// Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index']);
 
 
 
@@ -28,8 +28,8 @@ Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'inde
 Route::get('doba', [DobaController::class, 'someMethod'])->name('doba.index');
 
 Route::get('/', [App\Http\Controllers\shop\ShopController::class, 'home'])->name('home-page');
-Route::get('/shop', [App\Http\Controllers\shop\ShopController::class, 'shop'])->name('shop-page');
-Route::get('/trending-products', [App\Http\Controllers\shop\ShopController::class, 'trending'])->name('trending-products');
+Route::get('/online-shopping-websites-usa', [App\Http\Controllers\shop\ShopController::class, 'shop'])->name('shop-page');
+Route::get('/trending-products-2024', [App\Http\Controllers\shop\ShopController::class, 'trending'])->name('trending-products');
 
 
 Route::get('/search/autocomplete', [App\Http\Controllers\shop\ShopController::class, 'autocomplete'])->name('search-autocomplete');
